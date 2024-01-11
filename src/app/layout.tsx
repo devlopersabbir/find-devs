@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import Providers from "@/components/providers/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,16 +31,18 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         className={cn("relative h-full font-sans antialiased", inter.className)}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <main className="relative flex flex-col min-h-screen bg-zinc-100 dark:bg-zinc-900">
-            <div className="flex-1 flex-grow">{children}</div>
-          </main>
-        </ThemeProvider>
+        <Providers>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <main className="relative flex flex-col min-h-screen bg-zinc-100 dark:bg-zinc-900">
+              <div className="flex-1 flex-grow">{children}</div>
+            </main>
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

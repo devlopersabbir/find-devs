@@ -20,6 +20,7 @@ const ProfileCard = () => {
           <AvatarImage
             src="https://avatars.githubusercontent.com/u/82939905?v=4"
             className="object-fill"
+            alt="profile photo"
           />
           <AvatarFallback>SH</AvatarFallback>
         </Avatar>
