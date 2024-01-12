@@ -1,4 +1,3 @@
-import { network } from "@/utils";
 import {
   pgTable,
   serial,
@@ -20,8 +19,10 @@ export const users = pgTable("user", {
     .notNull()
     .default("DEVELOPER"),
   description: text("descriptions").notNull(),
-  social: json("socail").$type<{ network: network; link: string }>(),
+  social: json("socail").$type<{ network: string; link: string }>(),
   portfolio: text("portfolio"),
+  profileImage: text("profile_image"),
+  // nameSlug: varchar("name_slug", { length: 255 }).notNull().unique(),
 
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),

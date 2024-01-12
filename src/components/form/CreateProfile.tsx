@@ -9,6 +9,7 @@ import {
   Linkedin,
   Upload,
   X,
+  Youtube,
 } from "lucide-react";
 import {
   Form,
@@ -21,18 +22,59 @@ import {
 import { useForm } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import { userSchema } from "@/validators/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import React, { useState, useTransition } from "react";
+import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { profile } from "./actions";
+import { networks } from "@/constants";
+import { TNetwork } from "@/utils";
+import slug from "slug";
+
+export type TUserSchema = z.infer<typeof userSchema>;
 
 const CreateProfile = () => {
+  const [isPending, startTransition] = useTransition();
   const isUpload = false;
-  const form = useForm({
-    // resolver: zodResolver(userSchema),
-    // defaultValues: {},
-  });
 
+  /** use form hooks with resolver */
+  const form = useForm<TUserSchema>({
+    resolver: zodResolver(userSchema),
+    defaultValues: {
+      name: "",
+      location: "",
+      portfolio: "",
+      role: "DEVELOPER",
+      social: [
+        {
+          link: "",
+          network: "",
+        },
+      ],
+      skill: [],
+      description: "",
+      profileImage: "",
+    },
+  });
+  const router = useRouter();
+
+  /** onsubmit handler */
+  const onSubmit = (value: TUserSchema) => {
+    startTransition(async () => {
+      try {
+        await profile(value);
+        // alert("success!")
+        console.log("success");
+      } catch (error) {
+        throw new Error("Fail to submit form");
+      }
+    });
+  };
   return (
     <Form {...form}>
       <form
-        onSubmit={() => {}}
+        onSubmit={form.handleSubmit(onSubmit)}
         className="flex-center flex-col md:flex-row-reverse gap-5 px-5 pb-5"
       >
         <div className="w-[30%] flex-center flex-col gap-3">
@@ -112,7 +154,12 @@ const CreateProfile = () => {
               <FormItem>
                 <FormLabel className="font-semibold">Add your skills</FormLabel>
                 <FormControl>
-                  <Input placeholder="TypeScript, Rust, C, Python" {...field} />
+                  <Input
+                    placeholder="TypeScript, Rust, C, Python"
+                    onChange={(e) => {
+                      form.setValue("skill", e.target.value.split(", "));
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -126,22 +173,30 @@ const CreateProfile = () => {
                 <FormLabel htmlFor="link" className="font-semibold">
                   Add your social links
                 </FormLabel>
-                <div className="relative flex-center">
-                  <Github className="absolute left-2" />
-                  <Input type="url" className="pl-10" id="link" />
-                </div>
-                <div className="relative flex-center">
-                  <Facebook className="absolute left-2" />
-                  <Input type="url" className="pl-10" id="link" />
-                </div>
-                <div className="relative flex-center">
-                  <Linkedin className="absolute left-2" />
-                  <Input type="url" className="pl-10" id="link" />
-                </div>
-                <div className="relative flex-center">
-                  <Instagram className="absolute left-2" />
-                  <Input type="url" className="pl-10" id="link" />
-                </div>
+                {networks.map((net: TNetwork, i: number) => (
+                  <div className="relative flex-center" key={i}>
+                    {net.network === "Github" ? (
+                      <Github className="absolute left-2" />
+                    ) : net.network === "Facebook" ? (
+                      <Facebook className="absolute left-2" />
+                    ) : net.network === "Linkedin" ? (
+                      <Linkedin className="absolute left-2" />
+                    ) : null}
+                    <Input
+                      type="url"
+                      className="pl-10"
+                      id="link"
+                      onChange={(e) => {
+                        const newSocial = [...(field.value as any)];
+                        newSocial[i] = {
+                          network: net.network,
+                          link: e.target.value,
+                        };
+                        form.setValue("social", newSocial);
+                      }}
+                    />
+                  </div>
+                ))}
               </FormItem>
             )}
           />
@@ -171,13 +226,3 @@ const CreateProfile = () => {
 };
 
 export default CreateProfile;
-
-const LinkList = ({ pointer }: { pointer: number }) => {
-  return (
-    <div className="relative flex-center">
-      <Link className="absolute left-2" />
-      <Input type="url" className="pl-10" id="link" />
-      <X className="absolute right-2 bg-slate-500/50 rounded-full p-1" />
-    </div>
-  );
-};

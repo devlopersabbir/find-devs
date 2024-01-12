@@ -2,9 +2,8 @@
 
 import React, { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { trpc } from "@/tRPC";
 import { httpBatchLink } from "@trpc/client";
-import { getBaseUrl } from "@/tRPC/client";
+import { getBaseUrl, trpc } from "@/tRPC/client";
 
 const Providers = ({ children }: { children: ReactNode }) => {
   const queryClient = new QueryClient();
@@ -12,12 +11,6 @@ const Providers = ({ children }: { children: ReactNode }) => {
     links: [
       httpBatchLink({
         url: `${getBaseUrl()}/api/trpc`,
-        fetch(url, options) {
-          return fetch(url, {
-            ...options,
-            credentials: "include",
-          });
-        },
       }),
     ],
   });

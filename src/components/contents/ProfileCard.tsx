@@ -1,12 +1,11 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { ArrowRight, Github, MapPin } from "lucide-react";
 import { Badge } from "../ui/badge";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "../ui/button";
+import { trpc } from "@/tRPC/client";
 
 const ProfileCard = () => {
   return (

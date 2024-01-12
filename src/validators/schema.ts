@@ -5,12 +5,15 @@ export const userSchema = z.object({
   location: z.string().min(2).max(120),
   skill: z.array(z.string()),
   role: z.enum(["SYSTEM_ADMIN", "DEVELOPER", "ADMIN"]).default("DEVELOPER"),
-  description: z.string().min(10).max(40),
-  social: z.array(
-    z.object({
-      network: z.string(),
-      link: z.string(),
-    })
-  ),
+  description: z.string().min(10).max(500),
+  social: z
+    .array(
+      z.object({
+        network: z.string(),
+        link: z.string(),
+      })
+    )
+    .optional(),
   portfolio: z.string(),
+  profileImage: z.string().optional(),
 });
