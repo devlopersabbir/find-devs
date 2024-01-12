@@ -1,3 +1,10 @@
-import { pgEnum } from "drizzle-orm/pg-core";
+export enum network {
+  "facebook",
+  "instagram",
+  "github",
+  "linkedin",
+  "twitter",
+  "youtube",
+}
 
-export const roleEnum = pgEnum("role", ["SYSTEM_ADMIN", "DEVELOPER", "ADMIN"]);
+export type TRole = "SYSTEM_ADMIN" | "DEVELOPER" | "ADMIN";

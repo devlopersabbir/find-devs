@@ -1,20 +1,27 @@
-import { roleEnum } from "@/utils";
+import { network } from "@/utils";
 import {
-  integer,
-  pgEnum,
   pgTable,
   serial,
-  uniqueIndex,
-  varchar,
   uuid,
   timestamp,
+  text,
+  varchar,
+  json,
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable("user", {
   id: serial("id").primaryKey(),
   uuid: uuid("uuid").defaultRandom().unique(),
 
-  role: roleEnum("role").default("DEVELOPER"),
+  name: varchar("name", { length: 255 }).notNull(),
+  location: varchar("location", { length: 255 }).notNull(),
+  skills: json("skills").$type<string[]>().notNull(),
+  role: text("role", { enum: ["SYSTEM_ADMIN", "DEVELOPER", "ADMIN"] })
+    .notNull()
+    .default("DEVELOPER"),
+  description: text("descriptions").notNull(),
+  social: json("socail").$type<{ network: network; link: string }>(),
+  portfolio: text("portfolio"),
 
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),

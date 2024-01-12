@@ -2,6 +2,7 @@ import ProfileCard from "@/components/contents/ProfileCard";
 import Paginations from "@/components/pagination/Paginations";
 import Search from "@/components/search/Search";
 import Sidebar from "@/components/sidebar/Sidebar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import React from "react";
 
 export default function Home() {

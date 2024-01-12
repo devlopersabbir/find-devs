@@ -1,10 +1,10 @@
 import Logo from "@/constants/Logo";
 import React from "react";
-import { Button } from "../ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { Github, Linkedin, LinkedinIcon, LucideLinkedin } from "lucide-react";
+import { Github, LucideLinkedin } from "lucide-react";
 import { ModeToggle } from "../theme/Toggle";
+import ProfileAdd from "./ProfileAdd";
 
 const Sidebar = () => {
   return (
@@ -19,9 +19,7 @@ const Sidebar = () => {
           <p className="text-left text-base text-muted-foreground font-mono">
             Discover All Developers From The Programming World
           </p>
-          <Button variant="default" className="font-semibold mt-5">
-            Add My Profile
-          </Button>
+          <ProfileAdd />
         </div>
         {/* footer */}
         <footer className="flex-center gap-3">
