@@ -1,16 +1,6 @@
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import {
-  Edit3,
-  Facebook,
-  Github,
-  Instagram,
-  Link,
-  Linkedin,
-  Upload,
-  X,
-  Youtube,
-} from "lucide-react";
+import { Edit3, Facebook, Github, Linkedin, Upload } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -24,17 +14,18 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { userSchema } from "@/validators/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { profile } from "./actions";
 import { networks } from "@/constants";
 import { TNetwork } from "@/utils";
-import slug from "slug";
+import { trpc } from "@/tRPC/client";
+import { toast } from "sonner";
 
 export type TUserSchema = z.infer<typeof userSchema>;
 
 const CreateProfile = () => {
+  const mutation = trpc.store.useMutation();
   const [isPending, startTransition] = useTransition();
   const isUpload = false;
 
@@ -63,10 +54,11 @@ const CreateProfile = () => {
   const onSubmit = (value: TUserSchema) => {
     startTransition(async () => {
       try {
-        await profile(value);
-        // alert("success!")
-        console.log("success");
+        await mutation.mutate(value);
+        toast.success("Developer Profile created successfully!");
+        router.replace("/");
       } catch (error) {
+        toast.error("Fail to create developer profile");
         throw new Error("Fail to submit form");
       }
     });
@@ -216,7 +208,17 @@ const CreateProfile = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="font-semibold">
+          <Button
+            type="submit"
+            className="font-semibold transition-all ease-out duration-300"
+            disabled={isPending ? true : false}
+          >
+            {isPending ? (
+              <svg
+                className="transition-all ease-out duration-300 animate-spin h-5 w-5 mr-3 ..."
+                viewBox="0 0 24 24"
+              ></svg>
+            ) : null}
             Add Profile
           </Button>
         </div>

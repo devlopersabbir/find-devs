@@ -1,13 +1,20 @@
 "use client";
-import React from "react";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { ArrowRight, Github, MapPin } from "lucide-react";
 import { Badge } from "../ui/badge";
 import Link from "next/link";
-import { trpc } from "@/tRPC/client";
+import { TUserSchema } from "../form/CreateProfile";
 
-const ProfileCard = () => {
+const ProfileCard = ({
+  description,
+  location,
+  name,
+  portfolio,
+  skill,
+  profileImage,
+  social,
+}: TUserSchema) => {
   return (
     <Card className="w-full backdrop-blur-3xl shadow flex flex-col dark:bg-zinc-700 border-none">
       {/* header */}
@@ -17,35 +24,33 @@ const ProfileCard = () => {
       >
         <Avatar className="w-24 h-24 object-cover">
           <AvatarImage
-            src="https://avatars.githubusercontent.com/u/82939905?v=4"
+            src={profileImage}
             className="object-fill"
             alt="profile photo"
           />
-          <AvatarFallback>SH</AvatarFallback>
+          <AvatarFallback>{name.substring(0, 2).toUpperCase()}</AvatarFallback>
         </Avatar>
         <div className="flex-start w-full overflow-hidden flex-col gap-1">
-          <h2 className="text-2xl font-semibold text-gray-700">
-            Sabbir Hossain Shuvo
-          </h2>
+          <h2 className="text-2xl font-semibold text-gray-700">{name}</h2>
           <p className="flex-center gap-2 text-base">
             <MapPin size={20} />
-            Bangladesh
+            {location}
           </p>
           <div className="flex overflow-x-auto gap-2 mt-2.5">
-            {[0, 1, 2, 3, 4].map((_, i) => (
+            {skill.map((sk, i) => (
               <Badge
                 key={i}
                 variant="secondary"
                 className="text-sm cursor-all-scroll select-none"
               >
-                JavaScript
+                {sk}
               </Badge>
             ))}
           </div>
         </div>
         <div className="flex-end w-52">
           <Link
-            href="/"
+            href={portfolio ?? "https://github.com/devlopersabbir"}
             className="hover:underline text-green-600 flex-start gap-2"
           >
             View Profile
@@ -54,22 +59,15 @@ const ProfileCard = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <p className="font-serif text-lg">
-          Passionate software developer with expertise in PHP, Java, and .NET
-          and C# Enthusiastic problem solver and lifelong learner, dedicated to
-          crafting innovative solutions.
-        </p>
+        <p className="font-serif text-lg">{description}</p>
         <div className="flex-start mt-3 gap-4">
-          {[0, 1, 2, 3].map((_, i) => (
+          {social?.map((net, i) => (
             <Link
               key={i}
-              href="/"
+              href={net.link}
               className="group scale-100 duration-300 ease-out bg-red-600 hover:bg-transparent rounded-md hover:rounded-full p-1.5 text-white"
             >
-              <Github
-                size={25}
-                className="group-hover:scale-125 group-hover:text-rose-600 group-hover:rotate-[360deg] duration-300 ease-out"
-              />
+              <Github className="group-hover:scale-125 group-hover:text-rose-600 group-hover:rotate-[360deg] duration-300 ease-out" />
             </Link>
           ))}
         </div>

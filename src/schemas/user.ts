@@ -19,7 +19,7 @@ export const users = pgTable("user", {
     .notNull()
     .default("DEVELOPER"),
   description: text("descriptions").notNull(),
-  social: json("socail").$type<{ network: string; link: string }>(),
+  social: json("social").$type<{ network: string; link: string }>(),
   portfolio: text("portfolio"),
   profileImage: text("profile_image"),
   // nameSlug: varchar("name_slug", { length: 255 }).notNull().unique(),

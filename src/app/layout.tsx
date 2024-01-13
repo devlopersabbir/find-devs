@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import Providers from "@/components/providers/Providers";
 
@@ -38,6 +39,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <Toaster />
             <main className="relative flex flex-col min-h-screen bg-zinc-100 dark:bg-zinc-900">
               <div className="flex-1 flex-grow">{children}</div>
             </main>
