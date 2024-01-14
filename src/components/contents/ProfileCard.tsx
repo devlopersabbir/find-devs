@@ -5,6 +5,7 @@ import { ArrowRight, Github, MapPin } from "lucide-react";
 import { Badge } from "../ui/badge";
 import Link from "next/link";
 import { TUserSchema } from "../form/CreateProfile";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 
 const ProfileCard = ({
   description,
@@ -28,22 +29,30 @@ const ProfileCard = ({
           <AvatarFallback>{name.substring(0, 2).toUpperCase()}</AvatarFallback>
         </Avatar>
         <div className="flex-start w-full overflow-hidden flex-col gap-1">
-          <h2 className="text-2xl font-semibold text-gray-700">{name}</h2>
+          <h2 className="text-2xl font-semibold text-gray-700 dark:text-zinc-200">
+            {name}
+          </h2>
           <p className="flex-center gap-2 text-base">
             <MapPin size={20} />
             {location}
           </p>
-          <div className="flex overflow-x-auto gap-2 mt-2.5">
-            {skill.map((sk, i) => (
-              <Badge
-                key={i}
-                variant="secondary"
-                className="text-sm cursor-all-scroll select-none"
-              >
-                {sk}
-              </Badge>
-            ))}
-          </div>
+          <Carousel className="w-full mt-1.5">
+            <CarouselContent
+              id="skills"
+              className="flex justify-start items-center"
+            >
+              {skill.map((sk, index) => (
+                <CarouselItem key={index} className="w-auto basis-[-29-px]">
+                  <Badge
+                    variant="secondary"
+                    className="text-sm cursor-all-scroll select-none"
+                  >
+                    {sk}
+                  </Badge>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
         </div>
         <div className="flex-end w-52">
           <Link

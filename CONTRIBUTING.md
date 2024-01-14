@@ -7,6 +7,7 @@ Make sure you have [Node.js](https://nodejs.org/en/download) **LTS** version and
 Once you have these in place, let's get the devFind repository onto your local machine. Fire up your terminal and run this command:
 
 ## **General Steps**
+
 1.  Identify an Issue from [issue tab](https://github.com/devlopersabbir/find-devs) or feature to add
 2.  Check posted Issues to see if your issue has already been posted
 3.  If not, create a new Issue (**see directions below**)
@@ -22,28 +23,32 @@ npm install -g pnpm
 ```
 
 ## **Install dependencies**
+
 To install depecency you can just fire below command.
 
 ```bash
 pnpm install
 ```
+
 ## **Required Task**
+
 1. Copy `.env.example` to .env using below command. (**Make sure you are in the project directory**)
-	```bash
-	cp .env.exmaple .env
-	```
+   ```bash
+   cp .env.exmaple .env
+   ```
 2. Make your postgresql connection URI and put into your `DATABASE_URI=""`
- env variable (**[Prefer to use neon tech](https://neon.tech)**)
- 3. Generate schema using drizzle kit
-	```bash
-	pnpm generate
-	```
-3. Push your generated `SQL` table
-	```bash
-	pnpm push
-	```
+   env variable (**[Prefer to use neon tech](https://neon.tech)**)
+3. Generate schema using drizzle kit
+   ```bash
+   pnpm generate
+   ```
+4. Push your generated `SQL` table
+   ```bash
+   pnpm push
+   ```
 
 ## **Run Development Server**
+
 Once all dependencies is installed then you can run your development server
 
 ```bash
@@ -51,6 +56,7 @@ pnpm dev
 ```
 
 ## **Before Commit Create New Branch**
+
 Before you made any commit you should create a new branch 😌
 Execute this command:
 
@@ -59,6 +65,7 @@ git checkout -b your-branch-name
 ```
 
 ## **Make Your Changes & Format code**
+
 Make your all of changes whatever you need. I'll be really happy to see that 😊
 Make sure you have formated your code using this command.
 

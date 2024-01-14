@@ -1,6 +1,6 @@
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { Edit3, Facebook, Github, Linkedin, Upload } from "lucide-react";
+import { Facebook, Github, Linkedin, Loader2, Upload } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -21,13 +21,25 @@ import { networks } from "@/constants";
 import { TNetwork } from "@/utils";
 import { trpc } from "@/tRPC/client";
 import { toast } from "sonner";
+import { useFileuplaod } from "@/hooks";
+import Image from "next/image";
+import { revalidatePath } from "next/cache";
 
 export type TUserSchema = z.infer<typeof userSchema>;
 
-const CreateProfile = () => {
-  const mutation = trpc.store.useMutation();
+const CreateProfile = ({
+  setOpen,
+}: {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const profiles = trpc.index.useQuery();
+  const mutation = trpc.store.useMutation({
+    onSettled: () => {
+      profiles.refetch();
+    },
+  });
   const [isPending, startTransition] = useTransition();
-  const isUpload = false;
+  const { loading, upload, url } = useFileuplaod();
 
   /** use form hooks with resolver */
   const form = useForm<TUserSchema>({
@@ -45,18 +57,22 @@ const CreateProfile = () => {
       ],
       skill: [],
       description: "",
-      profileImage: "",
     },
   });
   const router = useRouter();
 
   /** onsubmit handler */
   const onSubmit = (value: TUserSchema) => {
+    console.log("before: ", value);
+    const data = { ...value, profileImage: url };
+    console.log("pore: ", data);
     startTransition(async () => {
       try {
-        await mutation.mutate(value);
+        await mutation.mutate(data);
+        form.reset();
+        setOpen(false);
         toast.success("Developer Profile created successfully!");
-        router.replace("/");
+        revalidatePath("/");
       } catch (error) {
         toast.error("Fail to create developer profile");
         throw new Error("Fail to submit form");
@@ -74,22 +90,39 @@ const CreateProfile = () => {
             Upload Profile
           </h1>
           <div className="flex-center relative w-40 h-40 rounded-full border-2">
-            <div className="rounded-full bg-blue-400 w-full h-full" />
+            {url ? (
+              <Image
+                src={url}
+                alt="profiles"
+                className="w-full h-full rounded-full"
+                width={160}
+                height={160}
+              />
+            ) : (
+              <div className="rounded-full bg-blue-400 w-full h-full" />
+            )}
             <Label
               htmlFor="file"
-              className="group absolute bottom-[15px] -right-[5px] rounded-full w-10 h-10 bg-red-300 flex-center cursor-pointer"
+              className="z-50 group absolute bottom-[15px] -right-[5px] rounded-full w-10 h-10 bg-red-300 flex-center cursor-pointer"
             >
-              {isUpload ? (
-                <Upload className="group-hover:cursor-pointer" />
+              {loading ? (
+                <Loader2 className="h-4 w-4 animate-spin group-hover:cursor-pointer bg-transparent" />
               ) : (
-                <Edit3 className="group-hover:cursor-pointer cursor-pointer" />
+                <Upload className="bg-transparent group-hover:cursor-pointer" />
               )}
               <Input
+                disabled={loading}
+                onChange={(e) => {
+                  if (e.target.files) {
+                    upload(e.target.files[0]);
+                  }
+                }}
                 name="file"
                 type="file"
                 placeholder="Name"
                 className="w-full h-full opacity-0 absolute"
                 aria-hidden
+                multiple={false}
               />
             </Label>
           </div>

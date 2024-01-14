@@ -27,7 +27,7 @@ const ProfileAdd = () => {
           <DialogTitle>Add Profile</DialogTitle>
         </DialogHeader>
         {/* form */}
-        <CreateProfile />
+        <CreateProfile setOpen={setOpen} />
       </DialogContent>
     </Dialog>
   );

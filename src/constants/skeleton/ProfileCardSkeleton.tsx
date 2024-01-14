@@ -21,7 +21,7 @@ const ProfileCardSkeleton = () => {
           </div>
           <div className="flex overflow-x-auto gap-2 mt-2.5">
             {[0, 1, 2, 3, 4].map((_, i) => (
-              <Skeleton className="h-6 w-32 rounded-full" />
+              <Skeleton key={i} className="h-6 w-32 rounded-full" />
             ))}
           </div>
         </div>
@@ -34,7 +34,7 @@ const ProfileCardSkeleton = () => {
         <Skeleton className="h-6 w-[70%] rounded" />
         <div className="flex-start mt-3 gap-4">
           {[0, 1, 3, 4].map((_, i) => (
-            <Skeleton className="h-7 w-7 rounded-md" />
+            <Skeleton key={i} className="h-7 w-7 rounded-md" />
           ))}
         </div>
       </CardContent>
