@@ -18,10 +18,7 @@ const ProfileCard = ({
   return (
     <Card className="w-full backdrop-blur-3xl shadow flex flex-col dark:bg-zinc-700 border-none">
       {/* header */}
-      <CardHeader
-        id="fuck"
-        className="flex justify-between items-stretch flex-row gap-4 overflow-hidden"
-      >
+      <CardHeader className="flex justify-between items-stretch flex-row gap-4 overflow-hidden">
         <Avatar className="w-24 h-24 object-cover">
           <AvatarImage
             src={profileImage}

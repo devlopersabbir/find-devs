@@ -29,7 +29,7 @@ const Paginations: React.FC<PaginationControlsProps> = ({
           <Button
             variant="ghost"
             disabled={!hasPrevPage}
-            onClick={() => router.push(`/?page=${Number(page) + 1}`)}
+            onClick={() => router.push(`/?page=${Number(page) - 1}`)}
           >
             &larr; Prev
           </Button>
@@ -38,7 +38,7 @@ const Paginations: React.FC<PaginationControlsProps> = ({
           <Button
             variant="ghost"
             disabled={!hasNextPage}
-            onClick={() => router.push(`/?page=${Number(page) - 1}`)}
+            onClick={() => router.push(`/?page=${Number(page) + 1}`)}
           >
             Next &rarr;
           </Button>
