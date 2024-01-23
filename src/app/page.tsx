@@ -15,7 +15,7 @@ export default async function Home({
 }: PageProps) {
   const profiles = await db.select().from(users).limit(3).offset(6);
   // console.log("///////////////////////////////////////////////////");
-  // console.log("pro", profiles);
+  console.log("pro", profiles);
   return (
     <div className="w-full">
       {/* sidebar */}

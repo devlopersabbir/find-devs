@@ -3,7 +3,7 @@ import { z } from "zod";
 export const userSchema = z.object({
   name: z.string().min(2).max(50).trim(),
   location: z.string().min(2).max(120),
-  skill: z.array(z.string()),
+  skills: z.array(z.string()),
   role: z
     .enum(["SYSTEM_ADMIN", "DEVELOPER", "ADMIN"])
     .default("DEVELOPER")
@@ -17,6 +17,6 @@ export const userSchema = z.object({
       })
     )
     .optional(),
-  portfolio: z.string().optional(),
+  portfolio: z.string().nonempty({ message: "Profile is required!" }),
   profileImage: z.string(),
 });

@@ -2,41 +2,36 @@
 
 import { TUserSchema } from "@/types";
 import { revalidatePath } from "next/cache";
+import { userSchema } from "../validations";
+import { db } from "@/database";
+import { users } from "@/schemas";
+import { trpc } from "@/tRPC/client";
 
-export const createProfile = async (inputs: TUserSchema, pathname: string) => {
-  console.log("inputs: ", inputs);
-  console.log("path: ", pathname);
+/**
+ * Creating a new profile
+ * @param {TUserSchema} inputs - user informations
+ * @param {string} pathname - the current pathname
+ */
+const mutation = trpc.store.useMutation();
+export const createProfile = async (
+  inputs: TUserSchema,
+  pathname: string
+): Promise<void> => {
+  const { success } = userSchema.safeParse(inputs);
+  if (!success) throw new Error("Invalid inputs");
+  try {
+    const isProfile = await db.query.users.findFirst({
+      where: (user, { eq }) => eq(user.portfolio, inputs.portfolio),
+    });
+    if (isProfile) throw new Error("Developer Profile Already Exists🥲");
+
+    // await db.insert(users).values(inputs);
+    await mutation.mutate(inputs);
+    revalidatePath(pathname);
+  } catch (err) {
+    console.log("error: ", err);
+    throw new Error(
+      "Something went wrong! \nFail to create developer account!"
+    );
+  }
 };
-// export const updateUser = async (
-//   inputs: TUserSchema,
-//   pathname: string
-// ): Promise<void> => {
-//   const { success } = userSchema.safeParse(inputs);
-//   if (!success) throw new Error("Invalid inputs");
-
-//   try {
-//     const isUser = await db.query.user.findFirst({
-//       where: (user, { eq }) => eq(user.username, inputs.username),
-//     });
-//     if (!isUser) {
-//       await db.insert(user).values(inputs);
-//     } else {
-//       await db.update(user).set(inputs);
-//     }
-//     if (pathname === "/profile/edit") revalidatePath(pathname);
-//   } catch (err) {
-//     throw new Error("Fail to update user.");
-//   }
-// };
-
-// export const fetchUser = async (username: string) => {
-//   if (!username) throw new Error("Username is required to fetch user!");
-
-//   try {
-//     return (await db.query.user.findFirst({
-//       where: (user, { eq }) => eq(user.username, username),
-//     })) as TUserSchema;
-//   } catch (err) {
-//     throw new Error("Fail to fetch user");
-//   }
-// };

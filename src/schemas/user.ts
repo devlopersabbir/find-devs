@@ -20,7 +20,7 @@ export const users = pgTable("user", {
     .default("DEVELOPER"),
   description: text("descriptions").notNull(),
   social: json("social").$type<{ network: string; link: string }>(),
-  portfolio: text("portfolio"),
+  portfolio: text("portfolio").unique().notNull(),
   profileImage: text("profile_image").notNull(),
   // nameSlug: varchar("name_slug", { length: 255 }).notNull().unique(),
 

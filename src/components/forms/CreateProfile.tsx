@@ -24,6 +24,7 @@ import { User } from "@/schemas";
 import { createProfile } from "@/lib/actions";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
+import { LoadingSpinner } from "@/constants/LoadingSpinner";
 
 const CreateProfile = ({
   setOpen,
@@ -49,9 +50,8 @@ const CreateProfile = ({
           network: "",
         },
       ],
-      skill: [],
+      skills: [],
       description: "",
-      profileImage: "",
     },
   });
 
@@ -87,20 +87,18 @@ const CreateProfile = ({
       const isBase64 = isBase64Image(values.profileImage);
       if (isBase64) {
         const imageRes = await startUpload(files);
-        console.log("image res: ", imageRes);
         if (imageRes && imageRes[0].url) {
           values.profileImage = imageRes[0]?.url;
         }
       }
-
       /** submit form with server actions */
       try {
         await createProfile(values, pathname);
         form.reset();
         setOpen(false);
         toast.success("Developer Profile created successfully!");
-      } catch (error) {
-        toast.error("Fail to create developer profile");
+      } catch (error: any) {
+        toast.error(error.message);
       }
     });
   };
@@ -265,12 +263,7 @@ const CreateProfile = ({
             className="font-semibold transition-all ease-out duration-300"
             disabled={isPending}
           >
-            {isPending ? (
-              <svg
-                className="transition-all ease-out duration-300 animate-spin h-5 w-5 mr-3 ..."
-                viewBox="0 0 24 24"
-              ></svg>
-            ) : null}
+            {isPending && <LoadingSpinner />}
             Add Profile
           </Button>
         </div>

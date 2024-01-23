@@ -9,7 +9,7 @@ export const appRouter = router({
       name: input.name,
       description: input.description,
       location: input.location,
-      skills: input.skill,
+      skills: input.skills,
       portfolio: input.portfolio,
       role: input.role,
       social: input.social as any,

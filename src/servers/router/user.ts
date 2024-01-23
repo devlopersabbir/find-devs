@@ -1,4 +1,4 @@
-import { userSchema } from "@/validators/schema";
+import { userSchema } from "@/lib/validations";
 import { procedure, router } from "../tRPC";
 
 export const userRouter = router({
