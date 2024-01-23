@@ -21,9 +21,11 @@ export const users = pgTable("user", {
   description: text("descriptions").notNull(),
   social: json("social").$type<{ network: string; link: string }>(),
   portfolio: text("portfolio"),
-  profileImage: text("profile_image"),
+  profileImage: text("profile_image").notNull(),
   // nameSlug: varchar("name_slug", { length: 255 }).notNull().unique(),
 
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
+
+export type User = typeof users.$inferInsert;

@@ -1,15 +1,9 @@
 import { procedure, router } from "@/servers/tRPC";
 import { db } from "@/database";
 import { users } from "@/schemas";
-import { userSchema } from "@/validators/schema";
-import { desc } from "drizzle-orm";
+import { userSchema } from "@/lib/validations";
 
 export const appRouter = router({
-  index: procedure.query(async () => {
-    return await db.query.users.findMany({
-      orderBy: desc(users.createdAt),
-    });
-  }),
   store: procedure.input(userSchema).mutation(async ({ input }) => {
     await db.insert(users).values({
       name: input.name,
@@ -23,6 +17,5 @@ export const appRouter = router({
     });
     return true;
   }),
-  // user: userRouter,
 });
 export type TAppRouter = typeof appRouter;

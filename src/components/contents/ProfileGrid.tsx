@@ -4,23 +4,18 @@ import React from "react";
 import ProfileCard from "./ProfileCard";
 import Paginations from "../pagination/Paginations";
 import ProfileCardSkeleton from "@/constants/skeleton/ProfileCardSkeleton";
+import { TUserSchema } from "@/types";
 
 type Props = {
   page: string;
+  profiles?: TUserSchema[];
 };
 
-const ProfileGrid = ({ page }: Props) => {
-  const profiles = trpc.index.useQuery();
-  const perPage = 5;
-
-  /** mocked, skipped and limited in the real app */
-  const start = (Number(page) - 1) * perPage; // 0, 5, 10
-  const end = start + perPage; // 5, 10, 15
-  const entries = profiles.data?.slice(start, end);
-
+const ProfileGrid = ({ page, profiles }: Props) => {
   return (
-    <div className="mt-32 mb-8 border-t-orange-500 ml-[20rem] px-6 overflow-y-scroll">
-      {!profiles.isLoading ? (
+    <>
+      <h1>hello</h1>
+      {/* {!profiles ? (
         <div className="flex-center flex-col gap-3">
           {entries?.map((item, i: number) => (
             <ProfileCard
@@ -46,8 +41,8 @@ const ProfileGrid = ({ page }: Props) => {
             <ProfileCardSkeleton key={i} />
           ))}
         </div>
-      )}
-    </div>
+      )} */}
+    </>
   );
 };
 

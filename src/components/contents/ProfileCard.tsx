@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { ArrowRight, Github, MapPin } from "lucide-react";
 import { Badge } from "../ui/badge";
 import Link from "next/link";
-import { TUserSchema } from "../form/CreateProfile";
+import { TUserSchema } from "../forms/CreateProfile";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 
 const ProfileCard = ({
