@@ -1,30 +1,35 @@
-"use client";
-import { trpc } from "@/tRPC/client";
 import React from "react";
+import { db } from "@/database";
+import { users } from "@/schemas";
 import ProfileCard from "./ProfileCard";
 import Paginations from "../pagination/Paginations";
-import ProfileCardSkeleton from "@/constants/skeleton/ProfileCardSkeleton";
+import { sql } from "drizzle-orm";
 
 type Props = {
   page: string;
 };
 
-const ProfileGrid = ({ page }: Props) => {
-  const profiles = trpc.index.useQuery();
-  const perPage = 5;
-
-  /** mocked, skipped and limited in the real app */
-  const start = (Number(page) - 1) * perPage; // 0, 5, 10
-  const end = start + perPage; // 5, 10, 15
-  const entries = profiles.data?.slice(start, end);
-
+const ProfileGrid = async ({ page }: Props) => {
+  const currentPage = parseInt(page);
+  const itemPerPage = 2; // we want to show 2 item in per pages
+  const offset = (currentPage - 1) * itemPerPage; // (1 - 1) * 3 = 0
+  // const profiles = await db
+  //   .select({ count: sql<number>`count(*)` })
+  //   .from(users)
+  //   .limit(itemPerPage)
+  //   .offset(offset);
+  const [lengths, profiles] = await Promise.all([
+    db.select({ count: sql<number>`count(*)` }).from(users),
+    db.select().from(users).limit(itemPerPage).offset(offset),
+  ]);
+  const count = lengths[0].count;
   return (
-    <div className="mt-32 mb-8 border-t-orange-500 ml-[20rem] px-6 overflow-y-scroll">
-      {!profiles.isLoading ? (
-        <div className="flex-center flex-col gap-3">
-          {entries?.map((item, i: number) => (
+    <>
+      <div className="flex-center flex-col gap-3">
+        {profiles &&
+          profiles.map((item, index: number) => (
             <ProfileCard
-              key={i}
+              key={index}
               role={item.role}
               description={item.description}
               location={item.location}
@@ -35,19 +40,12 @@ const ProfileGrid = ({ page }: Props) => {
               social={item.social as any}
             />
           ))}
-          <Paginations
-            hasNextPage={end < Number(profiles.data?.length)}
-            hasPrevPage={start > 0}
-          />
-        </div>
-      ) : (
-        <div className="flex-center flex-col gap-3">
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((_, i) => (
-            <ProfileCardSkeleton key={i} />
-          ))}
-        </div>
-      )}
-    </div>
+      </div>
+      <Paginations
+        hasNextPage={currentPage < Math.ceil(count / itemPerPage)}
+        hasPrevPage={currentPage !== 1}
+      />
+    </>
   );
 };
 

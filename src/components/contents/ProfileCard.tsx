@@ -4,8 +4,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { ArrowRight, Github, MapPin } from "lucide-react";
 import { Badge } from "../ui/badge";
 import Link from "next/link";
-import { TUserSchema } from "../form/CreateProfile";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
+import { TNetwork, TUserSchema } from "@/types";
 
 const ProfileCard = ({
   description,
@@ -41,7 +41,7 @@ const ProfileCard = ({
               id="skills"
               className="flex justify-start items-center"
             >
-              {skill.map((sk, index) => (
+              {skill.map((sk: string, index: number) => (
                 <CarouselItem key={index} className="w-auto basis-[-29-px]">
                   <Badge
                     variant="secondary"
@@ -67,7 +67,7 @@ const ProfileCard = ({
       <CardContent>
         <p className="font-serif text-lg">{description}</p>
         <div className="flex-start mt-3 gap-4">
-          {social?.map((net, i) => (
+          {social?.map((net: TNetwork, i: number) => (
             <Link
               key={i}
               href={net.link}

@@ -1,11 +1,8 @@
-import ProfileCard from "@/components/contents/ProfileCard";
+import { Suspense } from "react";
 import ProfileGrid from "@/components/contents/ProfileGrid";
-import Paginations from "@/components/pagination/Paginations";
-import Search from "@/components/search/Search";
-import Sidebar from "@/components/sidebar/Sidebar";
-import { Card, CardFooter, CardHeader } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import React, { Suspense } from "react";
+import ProfileCardSkeleton from "@/constants/skeleton/ProfileCardSkeleton";
+import { db } from "@/database";
+import { users } from "@/schemas";
 
 type PageProps = {
   searchParams: {
@@ -17,12 +14,18 @@ export default async function Home({
   searchParams: { page = "1" },
 }: PageProps) {
   return (
-    <div className="w-full">
-      <Sidebar />
-      {/* search bar */}
-      <Search />
-      {/* scrolling content */}
-      <ProfileGrid page={page} />
+    <div className="mt-32 mb-8 border-t-orange-500 ml-[20rem] px-6 overflow-y-scroll">
+      <Suspense
+        fallback={
+          <div className="flex-center flex-col gap-3">
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((_, i) => (
+              <ProfileCardSkeleton key={i} />
+            ))}
+          </div>
+        }
+      >
+        <ProfileGrid page={page} />
+      </Suspense>
     </div>
   );
 }

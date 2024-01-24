@@ -4,7 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
-import Providers from "@/components/providers/Providers";
+import Shared from "@/components/shared/wrapper/Shared";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,21 +30,23 @@ export default function RootLayout({
     <html lang="en" className="h-full">
       <body
         suppressHydrationWarning={true}
-        className={cn("relative h-full font-sans antialiased", inter.className)}
+        className={cn(
+          "relative h-full font-sans antialiased bg-zinc-100 dark:bg-zinc-900",
+          inter.className
+        )}
       >
-        <Providers>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Toaster />
-            <main className="relative flex flex-col min-h-screen bg-zinc-100 dark:bg-zinc-900">
-              <div className="flex-1 flex-grow">{children}</div>
-            </main>
-          </ThemeProvider>
-        </Providers>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Toaster />
+          <main className="relative flex flex-col min-h-scree">
+            <Shared />
+            <div className="flex-1 flex-grow w-full">{children}</div>
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );

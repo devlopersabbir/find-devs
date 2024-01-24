@@ -1,3 +1,8 @@
+export const isBase64Image = (imageData: string): boolean => {
+  const base64Regex = /^data:image\/(png|jpe?g|gif|webp);base64,/;
+  return base64Regex.test(imageData);
+};
+
 export enum Network {
   Facebook = "facebook",
   Instagram = "instagram",
@@ -7,9 +12,5 @@ export enum Network {
   Youtube = "youtube",
 }
 
-export type TRole = "SYSTEM_ADMIN" | "DEVELOPER" | "ADMIN";
-export type TNet = keyof typeof Network;
-export type TNetwork = {
-  network: TNet | undefined;
-  link: string;
-};
+// export also uploadting from here...
+export * from "./uploadthing";

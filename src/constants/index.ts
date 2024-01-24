@@ -1,4 +1,4 @@
-import { TNetwork } from "@/utils";
+import { TNetwork } from "@/types";
 
 export const networks: TNetwork[] = [
   {
