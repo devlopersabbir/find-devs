@@ -20,12 +20,13 @@ import Image from "next/image";
 import { TNetwork, TUserSchema } from "@/types";
 import { userSchema } from "@/lib/validations";
 import { isBase64Image, useUploadThing } from "@/utils";
-import { User } from "@/schemas";
 import { createProfile } from "@/lib/actions";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
 import { LoadingSpinner } from "@/constants/LoadingSpinner";
+import { z } from "zod";
 
+type User = z.infer<typeof userSchema>;
 const CreateProfile = ({
   setOpen,
 }: {
@@ -37,21 +38,17 @@ const CreateProfile = ({
   const pathname = usePathname();
 
   /** use form hooks with resolver */
-  const form = useForm<TUserSchema>({
+  const form = useForm<User>({
     resolver: zodResolver(userSchema),
     defaultValues: {
       name: "",
       location: "",
-      portfolio: "",
-      role: "DEVELOPER",
-      social: [
-        {
-          link: "",
-          network: "",
-        },
-      ],
-      skills: [],
       description: "",
+      portfolio: "",
+      profileImage: "",
+      role: "DEVELOPER",
+      skills: [],
+      social: [],
     },
   });
 
@@ -82,7 +79,7 @@ const CreateProfile = ({
   };
 
   /** onsubmit handler */
-  const onSubmit = async (values: User) => {
+  const onSubmitHandler = async (values: User) => {
     startTransition(async () => {
       const isBase64 = isBase64Image(values.profileImage);
       if (isBase64) {
@@ -91,6 +88,7 @@ const CreateProfile = ({
           values.profileImage = imageRes[0]?.url;
         }
       }
+      console.log("photo uploaded ans from submited", values);
       /** submit form with server actions */
       try {
         await createProfile(values, pathname);
@@ -105,14 +103,13 @@ const CreateProfile = ({
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmitHandler)}
         className="flex-center flex-col md:flex-row-reverse gap-5 px-5 pb-5"
       >
         <div className="w-[30%] flex-center flex-col gap-3">
           <h1 className="text-base font-semibold hidden md:visible">
             Upload Profile
           </h1>
-          {/* form image uplaod */}
           <FormField
             control={form.control}
             name="profileImage"
@@ -144,6 +141,7 @@ const CreateProfile = ({
             )}
           />
         </div>
+
         <div className="w-[80%] space-y-4">
           <FormField
             control={form.control}
@@ -191,7 +189,7 @@ const CreateProfile = ({
           />
           <FormField
             control={form.control}
-            name="skill"
+            name="skills"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="font-semibold">Add your skills</FormLabel>
@@ -199,7 +197,7 @@ const CreateProfile = ({
                   <Input
                     placeholder="TypeScript, Rust, C, Python"
                     onChange={(e) => {
-                      form.setValue("skill", e.target.value.split(", "));
+                      form.setValue("skills", e.target.value.split(", "));
                     }}
                   />
                 </FormControl>
@@ -260,7 +258,7 @@ const CreateProfile = ({
           />
           <Button
             type="submit"
-            className="font-semibold transition-all ease-out duration-300"
+            className="font-semibold transition-all ease-out duration-300 flex justify-center items-center gap-2"
             disabled={isPending}
           >
             {isPending && <LoadingSpinner />}

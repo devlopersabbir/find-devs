@@ -1,25 +1,35 @@
-"use client";
-import { trpc } from "@/tRPC/client";
 import React from "react";
+import { db } from "@/database";
+import { users } from "@/schemas";
 import ProfileCard from "./ProfileCard";
 import Paginations from "../pagination/Paginations";
-import ProfileCardSkeleton from "@/constants/skeleton/ProfileCardSkeleton";
-import { TUserSchema } from "@/types";
+import { sql } from "drizzle-orm";
 
 type Props = {
   page: string;
-  profiles?: TUserSchema[];
 };
 
-const ProfileGrid = ({ page, profiles }: Props) => {
+const ProfileGrid = async ({ page }: Props) => {
+  const currentPage = parseInt(page);
+  const itemPerPage = 2; // we want to show 2 item in per pages
+  const offset = (currentPage - 1) * itemPerPage; // (1 - 1) * 3 = 0
+  // const profiles = await db
+  //   .select({ count: sql<number>`count(*)` })
+  //   .from(users)
+  //   .limit(itemPerPage)
+  //   .offset(offset);
+  const [lengths, profiles] = await Promise.all([
+    db.select({ count: sql<number>`count(*)` }).from(users),
+    db.select().from(users).limit(itemPerPage).offset(offset),
+  ]);
+  const count = lengths[0].count;
   return (
     <>
-      <h1>hello</h1>
-      {/* {!profiles ? (
-        <div className="flex-center flex-col gap-3">
-          {entries?.map((item, i: number) => (
+      <div className="flex-center flex-col gap-3">
+        {profiles &&
+          profiles.map((item, index: number) => (
             <ProfileCard
-              key={i}
+              key={index}
               role={item.role}
               description={item.description}
               location={item.location}
@@ -30,18 +40,11 @@ const ProfileGrid = ({ page, profiles }: Props) => {
               social={item.social as any}
             />
           ))}
-          <Paginations
-            hasNextPage={end < Number(profiles.data?.length)}
-            hasPrevPage={start > 0}
-          />
-        </div>
-      ) : (
-        <div className="flex-center flex-col gap-3">
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((_, i) => (
-            <ProfileCardSkeleton key={i} />
-          ))}
-        </div>
-      )} */}
+      </div>
+      <Paginations
+        hasNextPage={currentPage < Math.ceil(count / itemPerPage)}
+        hasPrevPage={currentPage !== 1}
+      />
     </>
   );
 };
