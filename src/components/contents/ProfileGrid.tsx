@@ -26,8 +26,8 @@ const ProfileGrid = async ({ page, searchParams }: Props) => {
           .where(
             or(
               ilike(users.name, `%${searchParams}%`),
-              ilike(users.location, `%${searchParams}%`)
-            )
+              ilike(users.location, `%${searchParams}%`),
+            ),
           )
           .limit(itemPerPage)
           .offset(offset)
