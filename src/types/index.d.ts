@@ -8,3 +8,13 @@ export type TNetwork = {
   network: TNet | undefined;
   link: string;
 };
+
+// cloudinary resource
+export type CloudinaryResource = {
+  context?: {
+    alt?: string;
+    caption?: string;
+  };
+  public_id: string;
+  secure_url: string;
+};

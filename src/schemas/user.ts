@@ -22,7 +22,6 @@ export const users = pgTable("user", {
   social: json("social").$type<{ network: string; link: string }[]>(),
   portfolio: text("portfolio").unique().notNull(),
   profileImage: text("profile_image").notNull(),
-  // nameSlug: varchar("name_slug", { length: 255 }).notNull().unique(),
 
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
