@@ -1,20 +1,35 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Input } from "../ui/input";
 import { SearchIcon } from "lucide-react";
-import { searchProfilesAction } from "@/lib/actions";
+import { useDebounce } from "use-debounce";
+import { useRouter } from "next/navigation";
 
 const SearchProfiles = () => {
+  const router = useRouter();
+  const [queryString, setQueryString] = useState<string>("");
+  const [query] = useDebounce(queryString, 400);
+  const initialRender = useRef<boolean>(true);
+
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
+    if (query.length >= 2) {
+      router.push(`?search=${query}`);
+    } else {
+      router.push(`/`);
+    }
+  }, [queryString, query]);
   return (
     <>
       <Input
-        onChange={(e) => {
-          const queryString = e.target.value;
-          if (queryString.length >= 2) searchProfilesAction(queryString);
-        }}
+        onChange={(e) => setQueryString(e.target.value)}
         type="text"
+        value={queryString}
         className="text-lg p-6 text-gray-800 dark:text-white rounded-br-xl backdrop-blur-3xl bg-white/95 dark:bg-zinc-700 shadow-sm"
-        placeholder="Search developer by name, locations, gender, skills"
+        placeholder="Search developer by name, and locations"
       />
       <SearchIcon
         size={30}

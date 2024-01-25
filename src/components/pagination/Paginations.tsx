@@ -1,24 +1,26 @@
 "use client";
-import { useRouter, useSearchParams } from "next/navigation";
-
+import { useSearchParams } from "next/navigation";
 import React from "react";
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
 } from "../ui/pagination";
-import { Button } from "../ui/button";
+import Link from "next/link";
+import { buttonVariants } from "../ui/button";
+import { PaginationButton } from "@/constants/LinkDisbaled";
 
 interface PaginationControlsProps {
   hasNextPage: boolean;
   hasPrevPage: boolean;
+  search?: string;
 }
 
 const Paginations: React.FC<PaginationControlsProps> = ({
   hasNextPage,
   hasPrevPage,
+  search,
 }) => {
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   const page = searchParams.get("page") ?? "1";
@@ -26,22 +28,30 @@ const Paginations: React.FC<PaginationControlsProps> = ({
     <Pagination className="mt-5">
       <PaginationContent>
         <PaginationItem>
-          <Button
-            variant="ghost"
+          <PaginationButton
+            href={{
+              query: {
+                page: Number(page) - 1,
+                ...(search ? { search } : {}),
+              },
+            }}
             disabled={!hasPrevPage}
-            onClick={() => router.push(`/?page=${Number(page) - 1}`)}
           >
             &larr; Prev
-          </Button>
+          </PaginationButton>
         </PaginationItem>
         <PaginationItem>
-          <Button
-            variant="ghost"
+          <PaginationButton
+            href={{
+              query: {
+                page: Number(page) + 1,
+                ...(search ? { search } : {}),
+              },
+            }}
             disabled={!hasNextPage}
-            onClick={() => router.push(`/?page=${Number(page) + 1}`)}
           >
             Next &rarr;
-          </Button>
+          </PaginationButton>
         </PaginationItem>
         {/* <PaginationItem>
           <PaginationLink href="/">1</PaginationLink>
