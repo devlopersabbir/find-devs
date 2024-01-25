@@ -20,7 +20,6 @@ const ProfileGrid = async ({ page }: Props) => {
     db.select().from(users).limit(itemPerPage).offset(offset),
   ]);
   const count = lengths[0].count;
-  console.log(count);
   return (
     <>
       <div className="flex-center flex-col gap-3">
