@@ -14,7 +14,7 @@ export const userSchema = z.object({
       z.object({
         network: z.string(),
         link: z.string(),
-      })
+      }),
     )
     .optional(),
   portfolio: z.string().nonempty({ message: "Profile is required!" }),

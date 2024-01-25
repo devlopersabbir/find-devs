@@ -33,7 +33,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         className={cn(
           "relative h-full font-sans antialiased bg-zinc-100 dark:bg-zinc-900",
-          inter.className
+          inter.className,
         )}
       >
         <ThemeProvider

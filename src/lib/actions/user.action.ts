@@ -13,7 +13,7 @@ import { users } from "@/schemas";
  */
 export const createProfile = async (
   inputs: TUserSchema,
-  pathname: string
+  pathname: string,
 ): Promise<void> => {
   const { success } = userSchema.safeParse(inputs);
   if (!success) throw new Error("Invalid inputs");

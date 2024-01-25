@@ -55,7 +55,7 @@ const CreateProfile = ({
   /** image handler */
   const handleImage = async (
     event: ChangeEvent<HTMLInputElement>,
-    fieldChange: (value: string) => void
+    fieldChange: (value: string) => void,
   ) => {
     event.preventDefault();
     /** File reader */

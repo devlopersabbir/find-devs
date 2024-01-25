@@ -9,4 +9,3 @@ Find Dev is a kind of developer's Fair. An open-source platform to find all the 
 - Add your profile in just two clicks
 - Easily filter developers based on your specific needs
 - Enjoy an interactive user interface
-
