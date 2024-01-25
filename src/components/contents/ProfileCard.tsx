@@ -5,7 +5,6 @@ import { Badge } from "../ui/badge";
 import Link from "next/link";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import { TNetwork, TUserSchema } from "@/types";
-import CldImage from "@/cloud/CldImage";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const ProfileCard = ({
