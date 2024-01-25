@@ -11,6 +11,3 @@ export enum Network {
   Twitter = "twitter",
   Youtube = "youtube",
 }
-
-// export also uploadting from here...
-export * from "./uploadthing";

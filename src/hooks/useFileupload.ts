@@ -1,30 +1,31 @@
+"use client";
+import { config } from "@/cloud";
 import { useState } from "react";
 
-export const useFileuplaod = (): {
-  loading: boolean;
-  upload: any;
-  url: string;
-} => {
+export const useFileuplaod = () => {
+  const api_url = `https://api.cloudinary.com/v1_1/${config.cloud_name}/image/upload`;
   const [loading, setLoading] = useState<boolean>(false);
   const [url, setUrl] = useState<string>("");
 
-  const upload = async (file: File | undefined) => {
+  const upload = async (file: File) => {
     if (!file) throw new Error("No file found!");
     setLoading(true);
     try {
-      const data = new FormData();
-      data.set("file", file);
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("api_key", config.api_key);
+      formData.append("upload_preset", "profiles_preset");
 
-      const res = await fetch("/api/upload", {
+      const response = await fetch(api_url, {
         method: "POST",
-        body: data,
-      });
-      if (!res.ok) throw new Error(await res.text());
-      const imageUrl = await res.json();
-      setUrl(imageUrl?.url);
-    } catch (error) {
-      console.log("fail file upload: ", error);
-      throw new Error("Fail to upload files!");
+        credentials: "omit",
+        body: formData,
+      }).then((res) => res.json());
+      if (response) {
+        setUrl(response.secure_url);
+      }
+    } catch (error: any) {
+      throw new Error(error.message);
     } finally {
       setLoading(false);
     }

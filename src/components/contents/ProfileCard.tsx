@@ -1,11 +1,12 @@
 "use client";
 import { Card, CardContent, CardHeader } from "../ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { ArrowRight, Github, MapPin } from "lucide-react";
 import { Badge } from "../ui/badge";
 import Link from "next/link";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import { TNetwork, TUserSchema } from "@/types";
+import CldImage from "@/cloud/CldImage";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const ProfileCard = ({
   description,

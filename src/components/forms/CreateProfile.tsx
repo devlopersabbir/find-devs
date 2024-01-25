@@ -19,12 +19,12 @@ import { networks } from "@/constants";
 import Image from "next/image";
 import { TNetwork, TUserSchema } from "@/types";
 import { userSchema } from "@/lib/validations";
-import { isBase64Image, useUploadThing } from "@/utils";
 import { createProfile } from "@/lib/actions";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
 import { LoadingSpinner } from "@/constants/LoadingSpinner";
 import { z } from "zod";
+import { useFileuplaod } from "@/hooks";
 
 type User = z.infer<typeof userSchema>;
 const CreateProfile = ({
@@ -33,8 +33,8 @@ const CreateProfile = ({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [isPending, startTransition] = useTransition();
-  const [files, setFiles] = useState<File[]>([]);
-  const { startUpload } = useUploadThing("imageUploader");
+  const { upload, loading, url } = useFileuplaod();
+
   const pathname = usePathname();
 
   /** use form hooks with resolver */
@@ -53,7 +53,7 @@ const CreateProfile = ({
   });
 
   /** image handler */
-  const handleImage = (
+  const handleImage = async (
     event: ChangeEvent<HTMLInputElement>,
     fieldChange: (value: string) => void
   ) => {
@@ -63,13 +63,11 @@ const CreateProfile = ({
     if (event.target.files && event.target.files.length) {
       const file = event.target.files[0];
 
-      setFiles(Array.from(event.target.files));
-
       if (!file.type.includes("image")) return;
+      await upload(file);
 
       fileReader.onload = async (e) => {
         const imageDataUrl = e.target?.result?.toString() || "";
-
         fieldChange(imageDataUrl);
       };
 
@@ -81,15 +79,10 @@ const CreateProfile = ({
   /** onsubmit handler */
   const onSubmitHandler = async (values: User) => {
     startTransition(async () => {
-      const isBase64 = isBase64Image(values.profileImage);
-      if (isBase64) {
-        const imageRes = await startUpload(files);
-        if (imageRes && imageRes[0].url) {
-          values.profileImage = imageRes[0]?.url;
-        }
+      /** set image url on value */
+      if (url) {
+        values.profileImage = url;
       }
-      console.log("photo uploaded ans from submited", values);
-      /** submit form with server actions */
       try {
         await createProfile(values, pathname);
         form.reset();
@@ -126,7 +119,15 @@ const CreateProfile = ({
                   />
                 ) : (
                   <div className="flex-center w-full h-full rounded-full border-2 bg-zinc-100">
-                    <UploadCloud size={40} className="text-red-600" />
+                    {loading ? (
+                      <LoadingSpinner
+                        width="40"
+                        height="40"
+                        classes="z-[99999]"
+                      />
+                    ) : (
+                      <UploadCloud size={40} className="text-red-600" />
+                    )}
                   </div>
                 )}
                 <FormControl className="w-40 h-40 border-2 border-red-400 absolute rounded-full opacity-0">
