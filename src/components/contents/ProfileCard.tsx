@@ -1,11 +1,11 @@
-"use client";
 import { Card, CardContent, CardHeader } from "../ui/card";
-import { ArrowRight, Github, MapPin } from "lucide-react";
+import { ArrowRight, MapPin } from "lucide-react";
 import { Badge } from "../ui/badge";
 import Link from "next/link";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import { TNetwork, TUserSchema } from "@/types";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { getIconComponent } from "@/constants";
 
 const ProfileCard = ({
   description,
@@ -73,7 +73,7 @@ const ProfileCard = ({
               href={net.link}
               className="group scale-100 duration-300 ease-out bg-red-600 hover:bg-transparent rounded-md hover:rounded-full p-1.5 text-white"
             >
-              <Github className="group-hover:scale-125 group-hover:text-rose-600 group-hover:rotate-[360deg] duration-300 ease-out" />
+              {getIconComponent(net.network)}
             </Link>
           ))}
         </div>

@@ -6,7 +6,7 @@ type PaginationButtonProps =
   | (ComponentProps<typeof Link> & { disabled?: false })
   | (ComponentPropsWithoutRef<"button"> & { disabled: true });
 
-export function PaginationButton(props: PaginationButtonProps) {
+export const PaginationButton = (props: PaginationButtonProps) => {
   if (props.disabled) {
     const { disabled, ...rest } = props;
     return (
@@ -21,4 +21,4 @@ export function PaginationButton(props: PaginationButtonProps) {
       <Link {...props} />
     </Button>
   );
-}
+};

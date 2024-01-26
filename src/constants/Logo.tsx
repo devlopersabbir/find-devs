@@ -2,7 +2,7 @@ import { Code2 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-const Logo = () => {
+export const Logo = () => {
   return (
     <Link href="/">
       <div className="flex-center flex-col gap-2">
@@ -16,5 +16,3 @@ const Logo = () => {
     </Link>
   );
 };
-
-export default Logo;

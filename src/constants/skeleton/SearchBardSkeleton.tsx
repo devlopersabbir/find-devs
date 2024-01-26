@@ -1,9 +1,7 @@
-import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { SearchIcon } from "lucide-react";
 import React from "react";
 
-const SearchBardSkeleton = () => {
+export const SearchBardSkeleton = () => {
   return (
     <div className="backdrop-blur-3xl fixed top-0 left-[20rem] right-0 z-40 bg-zinc-200 dark:bg-zinc-800">
       <div className="w-full bottom-0 my-8 px-6 flex-center h-12 relative">
@@ -13,5 +11,3 @@ const SearchBardSkeleton = () => {
     </div>
   );
 };
-
-export default SearchBardSkeleton;

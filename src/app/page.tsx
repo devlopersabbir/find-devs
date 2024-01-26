@@ -1,7 +1,6 @@
 import React, { Suspense } from "react";
 import ProfileGrid from "@/components/contents/ProfileGrid";
 import ProfileCardSkeleton from "@/constants/skeleton/ProfileCardSkeleton";
-import Search from "@/components/shared/search/Search";
 import SearchBardSkeleton from "@/constants/skeleton/SearchBardSkeleton";
 
 type PageProps = {

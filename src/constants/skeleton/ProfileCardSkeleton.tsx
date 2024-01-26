@@ -1,11 +1,8 @@
 "use client";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowRight, Github, MapPin } from "lucide-react";
-import Link from "next/link";
 
-const ProfileCardSkeleton = () => {
+export const ProfileCardSkeleton = () => {
   return (
     <Card className="w-full backdrop-blur-3xl shadow flex flex-col dark:bg-zinc-700 border-none">
       {/* header */}
@@ -41,5 +38,3 @@ const ProfileCardSkeleton = () => {
     </Card>
   );
 };
-
-export default ProfileCardSkeleton;

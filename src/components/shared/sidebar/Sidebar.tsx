@@ -1,4 +1,4 @@
-import Logo from "@/constants/Logo";
+import { Logo } from "@/constants";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";

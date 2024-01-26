@@ -21,7 +21,7 @@ const SearchProfiles = () => {
     } else {
       router.push(`/`);
     }
-  }, [queryString, query]);
+  }, [queryString, query, router]);
   return (
     <>
       <Input

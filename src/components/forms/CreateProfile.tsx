@@ -14,15 +14,14 @@ import { useForm } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChangeEvent, useState, useTransition } from "react";
-import { networks } from "@/constants";
+import { ChangeEvent, useTransition } from "react";
 import Image from "next/image";
-import { TNetwork, TUserSchema } from "@/types";
+import { TNetwork } from "@/types";
 import { userSchema } from "@/lib/validations";
 import { createProfile } from "@/lib/actions";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
-import { LoadingSpinner } from "@/constants/LoadingSpinner";
+import { LoadingSpinner, networks } from "@/constants";
 import { z } from "zod";
 import { useFileuplaod } from "@/hooks";
 

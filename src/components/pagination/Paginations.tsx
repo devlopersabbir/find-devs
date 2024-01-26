@@ -6,9 +6,7 @@ import {
   PaginationContent,
   PaginationItem,
 } from "../ui/pagination";
-import Link from "next/link";
-import { buttonVariants } from "../ui/button";
-import { PaginationButton } from "@/constants/LinkDisbaled";
+import { PaginationButton } from "@/constants";
 
 interface PaginationControlsProps {
   hasNextPage: boolean;
@@ -53,20 +51,6 @@ const Paginations: React.FC<PaginationControlsProps> = ({
             Next &rarr;
           </PaginationButton>
         </PaginationItem>
-        {/* <PaginationItem>
-          <PaginationLink href="/">1</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="/" isActive>
-            2
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="/">3</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem> */}
       </PaginationContent>
     </Pagination>
   );
