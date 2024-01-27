@@ -8,7 +8,7 @@ import ProfileAdd from "./ProfileAdd";
 
 const Sidebar = () => {
   return (
-    <div className="flex-between flex-col h-full">
+    <div className="lg:flex-between flex justify-between p-4 lg:p-0 flex-col h-full">
       {/* header */}
       <div className="flex-start flex-col gap-4">
         <div className="flex-between flex-row w-full">
@@ -21,7 +21,7 @@ const Sidebar = () => {
         <ProfileAdd />
       </div>
       {/* footer */}
-      <footer className="flex-center gap-3">
+      <footer className="lg:flex-center gap-3 hidden ">
         <Link
           className="cursor-pointer"
           href="https://www.buymeacoffee.com/devlopersabbir"

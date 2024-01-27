@@ -40,7 +40,7 @@ const ProfileGrid = async ({ page, searchParams }: Props) => {
   ]);
   const count = lengths[0].count;
   return (
-    <div className="mt-32 mb-8 border-t-orange-500 ml-[20rem] px-6 overflow-y-scroll">
+    <div className="lg:mt-32 mb-8 border-t-orange-500 lg:ml-[20rem] lg:px-6 overflow-y-scroll p-5 lg:p-0">
       <Search />
       <div className="flex-center flex-col gap-3">
         {count <= 0 || profiles.length === 0 ? (

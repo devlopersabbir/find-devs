@@ -34,7 +34,7 @@ const SearchProfiles = () => {
       <SearchIcon
         size={30}
         className={
-          "absolute right-10 cursor-pointer hover:text-red-600 transition-all duration-300"
+          "absolute lg:right-10 right-2 cursor-pointer hover:text-red-600 transition-all duration-300"
         }
       />
     </>
