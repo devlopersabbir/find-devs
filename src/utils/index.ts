@@ -4,10 +4,10 @@ export const isBase64Image = (imageData: string): boolean => {
 };
 
 export enum Network {
-  Facebook = "facebook",
-  Instagram = "instagram",
-  Github = "github",
-  Linkedin = "linkedin",
-  Twitter = "twitter",
-  Youtube = "youtube",
+  Facebook = "Facebook",
+  Instagram = "Instagram",
+  Github = "Github",
+  Linkedin = "Linkedin",
+  Twitter = "Twitter",
+  Youtube = "Youtube",
 }
