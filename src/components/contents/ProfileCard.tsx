@@ -29,7 +29,7 @@ const ProfileCard = ({
           <AvatarFallback>{name.substring(0, 2).toUpperCase()}</AvatarFallback>
         </Avatar>
         <div className="flex-start w-full overflow-hidden flex-col gap-1">
-          <h2 className="text-2xl font-semibold text-gray-700 dark:text-zinc-200">
+          <h2 className="lg:text-2xl font-semibold text-gray-700 dark:text-zinc-200 text-1xl">
             {name}
           </h2>
           <p className="flex-center gap-2 text-base">
@@ -54,7 +54,8 @@ const ProfileCard = ({
             </CarouselContent>
           </Carousel>
         </div>
-        <div className="flex-end w-52">
+
+        <div className="lg:flex-end w-52 hidden">
           <Link
             href={portfolio ?? "https://github.com/devlopersabbir"}
             className="hover:underline text-green-600 flex-start gap-2"
@@ -64,6 +65,17 @@ const ProfileCard = ({
           </Link>
         </div>
       </CardHeader>
+
+      {/* For Tab & Mobile */}
+      <div className="m-6 w-52 block lg:hidden">
+        <Link
+          href={portfolio ?? "https://github.com/devlopersabbir"}
+          className="hover:underline text-green-600 flex-start gap-2"
+        >
+          View Profile
+          <ArrowRight size={20} />
+        </Link>
+      </div>
       <CardContent>
         <p className="font-serif text-lg">{description}</p>
         <div className="flex-start mt-3 gap-4">

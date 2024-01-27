@@ -18,7 +18,7 @@ export default async function Home({
         fallback={
           <>
             <SearchBardSkeleton />
-            <div className="mt-32 mb-8 border-t-orange-500 ml-[20rem] px-6 overflow-y-scroll">
+            <div className="lg:mt-32 mb-8 border-t-orange-500 lg:ml-[20rem] lg:px-6 overflow-y-scroll p-5 lg:p-0">
               <div className="flex-center flex-col gap-3">
                 {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((_, i) => (
                   <ProfileCardSkeleton key={i} />
