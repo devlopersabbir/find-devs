@@ -37,12 +37,13 @@ pnpm install
    cp .env.exmaple .env
    ```
 2. Make your postgresql connection URI and put into your `DATABASE_URI=""`
-   env variable (**[Prefer to use neon tech](https://neon.tech)**)
-3. Generate schema using drizzle kit
+   env variable (**[Prefer to use neon tech](https://neon.tech)** or **[supabase](https://supabase.com)**)
+3. I wish you will create your own cloudinary account to get all informations.
+4. Generate schema using drizzle kit
    ```bash
    pnpm generate
    ```
-4. Push your generated `SQL` table
+5. Push your generated `SQL` table
    ```bash
    pnpm push
    ```
@@ -73,6 +74,14 @@ Make sure you have formated your code using this command.
 pnpm format
 ```
 
+## **Do a simple step**
+
+I wish you will make a simple test on your local mechine help of this command.
+
+```bash
+pnpm lint
+```
+
 ## **Commit Your Changes**
 
 You're ready to immortalize your work. Commit your changes to your local branch using this incantation:
@@ -100,4 +109,4 @@ Your spellbinding creation will be reviewed by fellow wizards and witches to ens
 
 ## **Merge Your Changes**
 
-When your pull request is blessed by the council of wizards and passes all tests, it can be merged into the main codebase. Congratulations, you've successfully left your mark on devFind! 🪄🔮✨
+When your pull request is blessed by the council of wizards and passes all tests, i'll merged into the main codebase. Congratulations, you've successfully left your mark on [finddevs](https://finddevs.vercel.app)! 🪄🔮✨
