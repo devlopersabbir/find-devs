@@ -26,12 +26,17 @@ const ProfileGrid = async ({ page, searchParams }: Props) => {
           .where(
             or(
               ilike(users.name, `%${searchParams}%`),
-              ilike(users.location, `%${searchParams}%`),
-            ),
+              ilike(users.location, `%${searchParams}%`)
+            )
           )
           .limit(itemPerPage)
           .offset(offset)
-      : db.select().from(users).limit(itemPerPage).offset(offset),
+      : db
+          .select()
+          .from(users)
+          .orderBy(sql.raw("RANDOM()"))
+          .limit(itemPerPage)
+          .offset(offset),
   ]);
   const count = lengths[0].count;
   return (

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import Sidebar from "@/components/shared/sidebar/Sidebar";
-import Search from "@/components/shared/search/Search";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +33,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         className={cn(
           "relative h-full font-sans antialiased bg-zinc-100 dark:bg-zinc-900",
-          inter.className,
+          inter.className
         )}
       >
         <ThemeProvider
@@ -47,7 +47,9 @@ export default function RootLayout({
             <div className="w-[20rem] fixed left-0 top-0 my-8 px-8 border-r-2 border-gray-200 h-[90vh] z-20">
               <Sidebar />
             </div>
-            <div className="flex-1 flex-grow w-full">{children}</div>
+            <div className="flex-1 flex-grow w-full">
+              {children} <SpeedInsights />
+            </div>
           </main>
         </ThemeProvider>
       </body>

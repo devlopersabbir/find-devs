@@ -73,7 +73,7 @@ const ProfileCard = ({
               href={net.link}
               className="group scale-100 duration-300 ease-out bg-red-600 hover:bg-transparent rounded-md hover:rounded-full p-1.5 text-white"
             >
-              {getIconComponent(net.network)}
+              {getIconComponent(net.network as string)}
             </Link>
           ))}
         </div>
