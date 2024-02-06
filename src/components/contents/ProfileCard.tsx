@@ -17,10 +17,10 @@ const ProfileCard = ({
   social,
 }: TUserSchema) => {
   return (
-    <Card className="w-full backdrop-blur-3xl shadow flex flex-col dark:bg-zinc-700 border-none">
+    <Card className="w-full backdrop-blur-3xl shadow flex flex-col dark:bg-zinc-700 border-none transition-all ease-out duration-300">
       {/* header */}
-      <CardHeader className="flex justify-between items-stretch flex-row gap-4 overflow-hidden">
-        <Avatar className="w-24 h-24 object-cover">
+      <CardHeader className="flex justify-between items-stretch flex-row lg:gap-4 md:gap-2 gap-1 overflow-hidden">
+        <Avatar className="lg:w-24 md:w-20 w-16 lg:h-24 md:h-20 h-16 object-cover transition-all ease-out duration-300">
           <AvatarImage
             src={profileImage}
             className="object-fill"
@@ -28,15 +28,15 @@ const ProfileCard = ({
           />
           <AvatarFallback>{name.substring(0, 2).toUpperCase()}</AvatarFallback>
         </Avatar>
-        <div className="flex-start w-full overflow-hidden flex-col gap-1">
-          <h2 className="lg:text-2xl font-semibold text-gray-700 dark:text-zinc-200 text-1xl">
+        <div className="flex-start w-full overflow-hidden flex-col lg:gap-1 gap-0.5">
+          <h2 className="lg:text-2xl md:text-xl sm:text-lg text-base font-semibold text-gray-700 dark:text-zinc-200 ">
             {name}
           </h2>
-          <p className="flex-center gap-2 text-base">
-            <MapPin size={20} />
+          <p className="flex-center lg:gap-2 md:gap-1 gap-0 lg:text-xl md:text-lg sm:text-base text-xs">
+            <MapPin size={16} />
             {location}
           </p>
-          <Carousel className="w-full mt-1.5">
+          <Carousel className="w-full lg:mt-1.5 md:mt-0.5 mt-0">
             <CarouselContent
               id="skills"
               className="flex justify-start items-center"
@@ -45,7 +45,7 @@ const ProfileCard = ({
                 <CarouselItem key={index} className="w-auto basis-[-29-px]">
                   <Badge
                     variant="secondary"
-                    className="text-sm cursor-all-scroll select-none"
+                    className="lg:text-sm text-xs cursor-all-scroll select-none"
                   >
                     {sk}
                   </Badge>
@@ -55,29 +55,23 @@ const ProfileCard = ({
           </Carousel>
         </div>
 
-        <div className="lg:flex-end w-52 hidden">
+        <div>
           <Link
             href={portfolio ?? "https://github.com/devlopersabbir"}
-            className="hover:underline text-green-600 flex-start gap-2"
+            className="hover:underline text-green-600 flex gap-2 font-semibold"
           >
-            View Profile
-            <ArrowRight size={20} />
+            <span className="lg:text-lg md:text-md sm:text-base text-xs">
+              Profile
+            </span>
+            <ArrowRight size={18} />
           </Link>
         </div>
       </CardHeader>
 
-      {/* For Tab & Mobile */}
-      <div className="m-6 w-52 block lg:hidden">
-        <Link
-          href={portfolio ?? "https://github.com/devlopersabbir"}
-          className="hover:underline text-green-600 flex-start gap-2"
-        >
-          View Profile
-          <ArrowRight size={20} />
-        </Link>
-      </div>
       <CardContent>
-        <p className="font-serif text-lg">{description}</p>
+        <p className="font-thin lg:text-lg md:text-base text-xs">
+          {description}
+        </p>
         <div className="flex-start mt-3 gap-4">
           {social?.map((net: TNetwork, i: number) => (
             <Link

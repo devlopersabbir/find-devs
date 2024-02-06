@@ -178,10 +178,7 @@ const CreateProfile = ({
               <FormItem>
                 <FormLabel className="font-semibold">Portfolio url</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="https://github.com/devlopersabbir"
-                    {...field}
-                  />
+                  <Input placeholder="https://eample.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
