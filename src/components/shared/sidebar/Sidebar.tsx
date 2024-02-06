@@ -8,9 +8,9 @@ import ProfileAdd from "./ProfileAdd";
 
 const Sidebar = () => {
   return (
-    <div className="lg:flex-between flex justify-between p-4 lg:p-0 flex-col h-full">
+    <div className="md:flex-between flex justify-between flex-col h-full">
       {/* header */}
-      <div className="flex-start flex-col gap-4">
+      <div className="flex-start flex-col w-full">
         <div className="flex-between flex-row w-full">
           <Logo />
           <ModeToggle />
