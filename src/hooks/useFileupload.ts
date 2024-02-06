@@ -1,9 +1,9 @@
 "use client";
-import { config } from "@/cloud";
+import { config } from "@/configs";
 import { useState } from "react";
 
 export const useFileuplaod = () => {
-  const api_url = `https://api.cloudinary.com/v1_1/${config.cloud_name}/image/upload`;
+  const api_url = `https://api.cloudinary.com/v1_1/${config.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`;
   const [loading, setLoading] = useState<boolean>(false);
   const [url, setUrl] = useState<string>("");
 
@@ -13,7 +13,7 @@ export const useFileuplaod = () => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("api_key", config.api_key);
+      formData.append("api_key", config.NEXT_PUBLIC_CLOUDINARY_API_KEY);
       formData.append("upload_preset", "profiles_preset");
 
       const response = await fetch(api_url, {

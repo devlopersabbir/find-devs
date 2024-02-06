@@ -98,7 +98,7 @@ const CreateProfile = ({
         onSubmit={form.handleSubmit(onSubmitHandler)}
         className="flex-center flex-col md:flex-row-reverse gap-5 px-5 pb-5"
       >
-        <div className="w-[30%] flex-center flex-col gap-3">
+        <div className="w-full md:w-[30%] flex-center flex-col gap-3">
           <h1 className="text-base font-semibold hidden md:visible">
             Upload Profile
           </h1>
@@ -142,7 +142,7 @@ const CreateProfile = ({
           />
         </div>
 
-        <div className="w-[80%] space-y-4">
+        <div className="w-full md:w-[80%] space-y-4">
           <FormField
             control={form.control}
             name="name"
@@ -178,10 +178,7 @@ const CreateProfile = ({
               <FormItem>
                 <FormLabel className="font-semibold">Portfolio url</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="https://github.com/devlopersabbir"
-                    {...field}
-                  />
+                  <Input placeholder="https://eample.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

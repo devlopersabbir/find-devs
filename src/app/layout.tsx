@@ -33,7 +33,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         className={cn(
           "relative h-full font-sans antialiased bg-zinc-100 dark:bg-zinc-900",
-          inter.className
+          inter.className,
         )}
       >
         <ThemeProvider
@@ -44,7 +44,7 @@ export default function RootLayout({
         >
           <Toaster />
           <main className="relative flex flex-col min-h-scree">
-            <div className="lg:w-[20rem] lg:fixed lg:left-0 lg:top-0 lg:my-8 lg:px-8 border-r-2 border-gray-200 lg:h-[90vh] z-20 w-[100%]">
+            <div className="lg:w-[20rem] dark:bg-zinc-900 bg-zinc-100 lg:bg-transparent fixed lg:left-0 lg:top-0 lg:my-8 lg:h-[90vh] p-4 lg:px-4 lg:py-0 border-r-2 border-gray-200 z-20 w-full">
               <Sidebar />
             </div>
             <div className="flex-1 flex-grow w-full">
