@@ -29,7 +29,7 @@ const SearchProfiles = () => {
         type="text"
         value={queryString}
         className="text-lg p-6 text-gray-800 dark:text-white rounded-br-xl backdrop-blur-3xl bg-white/95 dark:bg-zinc-700 shadow-sm"
-        placeholder="Search developer by name, and locations"
+        placeholder="Search developer by name, skills or locations"
       />
       <SearchIcon
         size={30}
