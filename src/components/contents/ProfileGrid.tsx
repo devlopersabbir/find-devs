@@ -3,7 +3,7 @@ import { db } from "@/database";
 import { users } from "@/schemas";
 import ProfileCard from "./ProfileCard";
 import Paginations from "../pagination/Paginations";
-import { ilike, or, sql, arrayContains } from "drizzle-orm";
+import { ilike, or, sql } from "drizzle-orm";
 import Notfound from "../shared/Notfound";
 import Search from "../shared/search/Search";
 
@@ -16,29 +16,27 @@ const ProfileGrid = async ({ page, searchParams }: Props) => {
   const currentPage = parseInt(page); // like 1
   const itemPerPage = 5; // we want to show 5 item in per pages
   const offset = (currentPage - 1) * itemPerPage; // (1 - 1) * 3 = 0
-  const searchSkills = searchParams ? searchParams.split(',') : []; // Assuming skills are searched by a comma-separated string in searchParams
 
   const [lengths, profiles] = await Promise.all([
     db.select({ count: sql<number>`count(*)` }).from(users),
     searchParams
       ? db
-        .select()
-        .from(users)
-        .where(
-          or(
-            ilike(users.name, `%${searchParams}%`),
-            ilike(users.location, `%${searchParams}%`),
-            ...(searchSkills.length > 0 ? [arrayContains(users.skills, searchSkills)] : [])
-          ),
-        )
-        .limit(itemPerPage)
-        .offset(offset)
+          .select()
+          .from(users)
+          .where(
+            or(
+              ilike(users.name, `%${searchParams}%`),
+              ilike(users.location, `%${searchParams}%`),
+            ),
+          )
+          .limit(itemPerPage)
+          .offset(offset)
       : db
-        .select()
-        .from(users)
-        .orderBy(sql.raw("RANDOM()"))
-        .limit(itemPerPage)
-        .offset(offset),
+          .select()
+          .from(users)
+          .orderBy(sql.raw("RANDOM()"))
+          .limit(itemPerPage)
+          .offset(offset),
   ]);
   const count = lengths[0].count;
   return (
