@@ -3,7 +3,14 @@ import { db } from "@/database";
 import { users } from "@/schemas";
 import ProfileCard from "./ProfileCard";
 import Paginations from "../pagination/Paginations";
-import { ilike, or, sql, arrayContains } from "drizzle-orm";
+import {
+  ilike,
+  or,
+  sql,
+  arrayContained,
+  arrayContains,
+  arrayOverlaps,
+} from "drizzle-orm";
 import Notfound from "../shared/Notfound";
 import Search from "../shared/search/Search";
 
@@ -42,6 +49,7 @@ const ProfileGrid = async ({ page, searchParams }: Props) => {
           .limit(itemPerPage)
           .offset(offset),
   ]);
+
   const count = lengths[0].count;
   return (
     <div className="lg:mt-32 mt-[10rem] mb-8 border-t-orange-500 lg:ml-[20rem] px-4 lg:px-6 overflow-y-scroll relative">
