@@ -1,8 +1,8 @@
 {
   "name": "finddevs",
   "description": "Discover All Developers From The Programming World",
-  "version": "0.1.6",
-  "private": true,
+  "version": "0.1.8",
+  "private": false,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
