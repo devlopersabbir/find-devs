@@ -13,6 +13,7 @@ package-lock.json
 /.next/
 /out/
 drizzle
+package-lock.json
 
 # production
 /build

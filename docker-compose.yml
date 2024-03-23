@@ -5,9 +5,9 @@ services:
     restart: always
     container_name: find-devs-db
     ports:
-      - 5000:5000
+      - 5432:5432
     environment:
-      POSTGRES_PASSWORD: sabbir 
+      POSTGRES_PASSWORD: sabbir
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres

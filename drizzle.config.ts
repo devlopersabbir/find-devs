@@ -2,8 +2,8 @@ import { defineConfig } from "drizzle-kit";
 import dotenv from "dotenv";
 dotenv.config();
 
+if (!process.env.DATABASE_URI) throw new Error("DATABASE_URL is missing");
 export const DATABASE_URI = process.env.DATABASE_URI;
-if (!DATABASE_URI) throw new Error("DATABASE_URL is missing");
 
 export default defineConfig({
   schema: "./src/schemas/*",

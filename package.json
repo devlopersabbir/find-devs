@@ -1,7 +1,7 @@
 {
   "name": "finddevs",
   "description": "Discover All Developers From The Programming World",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "private": false,
   "scripts": {
     "dev": "next dev",
@@ -12,7 +12,8 @@
     "introspect": "drizzle-kit introspect:pg",
     "push": "drizzle-kit push:pg",
     "generate": "drizzle-kit generate:pg",
-    "drop": "drizzle-kit drop"
+    "drop": "drizzle-kit drop",
+    "studio": "drizzle-kit studio --host localhost --port 3001 --verbose --config drizzle.config.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",

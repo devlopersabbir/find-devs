@@ -1,16 +1,8 @@
-import React from "react";
 import { db } from "@/database";
 import { users } from "@/schemas";
 import ProfileCard from "./ProfileCard";
 import Paginations from "../pagination/Paginations";
-import {
-  ilike,
-  or,
-  sql,
-  arrayContained,
-  arrayContains,
-  arrayOverlaps,
-} from "drizzle-orm";
+import { ilike, or, sql } from "drizzle-orm";
 import Notfound from "../shared/Notfound";
 import Search from "../shared/search/Search";
 
