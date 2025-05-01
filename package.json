@@ -12,8 +12,10 @@
     "introspect": "drizzle-kit introspect:pg",
     "push": "drizzle-kit push:pg",
     "generate": "drizzle-kit generate:pg",
+    "migrate": "drizzle-kit migrate:pg",
     "drop": "drizzle-kit drop",
-    "studio": "drizzle-kit studio --host localhost --port 3001 --verbose --config drizzle.config.ts"
+    "studio": "drizzle-kit studio --host localhost --port 3001 --verbose --config drizzle.config.ts",
+    "seed": "cross-env DB_SEEDING=true tsx src/database/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -28,6 +30,7 @@
     "clsx": "^2.1.0",
     "cmdk": "^0.2.1",
     "dotenv": "^16.4.5",
+    "dotenv-expand": "^12.0.2",
     "drizzle-orm": "^0.29.5",
     "drizzle-zod": "^0.5.1",
     "embla-carousel-react": "8.0.0-rc19",
@@ -50,12 +53,14 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.7.0",
     "@types/node": "^20.12.4",
     "@types/pg": "^8.11.4",
     "@types/react": "^18.2.74",
     "@types/react-dom": "^18.2.24",
     "@types/slug": "^5.0.8",
     "autoprefixer": "^10.4.19",
+    "cross-env": "^7.0.3",
     "drizzle-kit": "^0.20.14",
     "embla-carousel": "8.0.0-rc19",
     "eslint": "^8.57.0",
@@ -63,6 +68,7 @@
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "tailwindcss": "^3.4.3",
+    "tsx": "^4.19.4",
     "typescript": "^5.4.3"
   }
 }

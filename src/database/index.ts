@@ -1,9 +1,9 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import { DATABASE_URI } from "../../drizzle.config";
-import { users } from "@/schemas";
+import { users } from "@/schemas/user";
 
-const pool = new Pool({
+export const pool = new Pool({
   connectionString: DATABASE_URI,
 });
 
@@ -12,3 +12,5 @@ export const db = drizzle(pool, {
     users,
   },
 });
+export type DB = typeof db;
+export default db;
