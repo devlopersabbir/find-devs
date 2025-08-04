@@ -1,3 +1,4 @@
+import { networks } from "@/utils";
 import {
   pgTable,
   serial,
@@ -8,7 +9,7 @@ import {
   json,
 } from "drizzle-orm/pg-core";
 
-export const users = pgTable("user", {
+export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   uuid: uuid("uuid").defaultRandom().unique(),
 
@@ -19,7 +20,9 @@ export const users = pgTable("user", {
     .notNull()
     .default("DEVELOPER"),
   description: text("descriptions").notNull(),
-  social: json("social").$type<{ network: string; link: string }[]>(),
+  social: json("social")
+    .$type<{ network: (typeof networks)[number]; link: string }[]>()
+    .notNull(),
   portfolio: text("portfolio").unique().notNull(),
   profileImage: text("profile_image").notNull(),
 

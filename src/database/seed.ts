@@ -1,11 +1,11 @@
 import { Table, getTableName, sql } from "drizzle-orm";
-import { DB, db, pool } from "./index";
+import { DB, db } from "./index";
 import * as schema from "@/schemas";
-import user_seed from "./seeds/user";
+import { usersData } from "./faker";
 
 async function resetTable(db: DB, table: Table) {
   return db.execute(
-    sql.raw(`TRUNCATE TABLE ${getTableName(table)} RESTART IDENTITY CASCADE`)
+    sql.raw(`TRUNCATE TABLE ${getTableName(table)} RESTART IDENTITY CASCADE`),
   );
 }
 
@@ -17,7 +17,8 @@ for (const table of [schema.users]) {
 }
 
 (async () => {
-  await user_seed(db);
-
-  await pool.end();
+  await Promise.all(
+    usersData.map(async (user) => await db.insert(schema.users).values(user)),
+  );
+  console.log("🎉 seed finished.");
 })();

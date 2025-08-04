@@ -1,7 +1,8 @@
 "use client";
 
 import { Input } from "../ui/input";
-import { Facebook, Github, Linkedin, UploadCloud } from "lucide-react";
+import { UploadCloud } from "lucide-react";
+import { Facebook, Github, Linkedin } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -113,8 +114,9 @@ const CreateProfile = ({
                     width={160}
                     height={160}
                     alt="profile photo"
+                    objectFit="cover"
                     priority
-                    className="rounded-full object-contain"
+                    className="rounded-full object-cover"
                   />
                 ) : (
                   <div className="flex-center w-full h-full rounded-full border-2 bg-zinc-100">
@@ -129,7 +131,7 @@ const CreateProfile = ({
                     )}
                   </div>
                 )}
-                <FormControl className="w-40 h-40 border-2 border-red-400 absolute rounded-full opacity-0">
+                <FormControl className="w-40 h-40 border-2 border-red-400 absolute rounded-full opacity-0 cursor-pointer">
                   <Input
                     type="file"
                     accept="image/*"
@@ -212,11 +214,11 @@ const CreateProfile = ({
                 </FormLabel>
                 {networks.map((net: TNetwork, i: number) => (
                   <div className="relative flex-center" key={i}>
-                    {net.network === "Github" ? (
+                    {net.network === "GitHub" ? (
                       <Github className="absolute left-2" />
                     ) : net.network === "Facebook" ? (
                       <Facebook className="absolute left-2" />
-                    ) : net.network === "Linkedin" ? (
+                    ) : net.network === "LinkedIn" ? (
                       <Linkedin className="absolute left-2" />
                     ) : null}
                     <Input
@@ -224,7 +226,7 @@ const CreateProfile = ({
                       className="pl-10"
                       id="link"
                       onChange={(e) => {
-                        const newSocial = [...(field.value as any)];
+                        const newSocial = [...field.value];
                         newSocial[i] = {
                           network: net.network,
                           link: e.target.value,
@@ -242,7 +244,7 @@ const CreateProfile = ({
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-semibold">About your self</FormLabel>
+                <FormLabel className="font-semibold">About yourself</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Tell us a little bit about yourself"

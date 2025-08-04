@@ -1,5 +1,4 @@
 import { faker } from "@faker-js/faker";
-import { users } from "@/schemas/user";
 import { User } from "@/schemas/user";
 
 const generateUser = (id: number): User => ({
@@ -18,10 +17,7 @@ const generateUser = (id: number): User => ({
     ],
     3
   ),
-  role:
-    id === 1
-      ? "SYSTEM_ADMIN"
-      : faker.helpers.arrayElement(["DEVELOPER", "ADMIN"]),
+  role: faker.helpers.arrayElement(["DEVELOPER", "ADMIN"]),
   description: faker.lorem.paragraph(),
   social: [
     { network: "LinkedIn", link: faker.internet.url() },
@@ -33,6 +29,6 @@ const generateUser = (id: number): User => ({
   updatedAt: faker.date.recent(),
 });
 
-export const usersData: User[] = Array.from({ length: 15 }, (_, index) =>
-  generateUser(index + 1)
+export const usersData: User[] = Array.from({ length: 10 }).map((_, i) =>
+  generateUser(i + 1)
 );

@@ -2,7 +2,7 @@ import { TNetwork } from "@/types";
 
 export const networks: TNetwork[] = [
   {
-    network: "Github",
+    network: "GitHub",
     link: "",
   },
   {
@@ -10,7 +10,7 @@ export const networks: TNetwork[] = [
     link: "",
   },
   {
-    network: "Linkedin",
+    network: "LinkedIn",
     link: "",
   },
 ];

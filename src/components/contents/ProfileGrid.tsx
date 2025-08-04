@@ -15,12 +15,17 @@ const ProfileGrid = async ({ page, searchParams }: Props) => {
   const currentPage = parseInt(page); // like 1
   const itemPerPage = 5; // we want to show 5 item in per pages
   const offset = (currentPage - 1) * itemPerPage; // (1 - 1) * 3 = 0
-  const searchSkills = searchParams ? searchParams.toLowerCase().split(/[\s,]+/) : []; // regular expression to accept inputs separated by comma, space or both
+  const searchSkills = searchParams
+    ? searchParams.toLowerCase().split(/[\s,]+/)
+    : []; // regular expression to accept inputs separated by comma, space or both
 
   // In order to get rid of the "error: operator does not exist: json @> json" I mannually cast the skills column to JSONB
-  const skillsCondition = searchSkills.length > 0
-    ? sql.raw(`lower("skills"::text)::JSONB @> '${JSON.stringify(searchSkills.map(skill => skill.toLowerCase()))}'::JSONB`)
-    : undefined;
+  const skillsCondition =
+    searchSkills.length > 0
+      ? sql.raw(
+          `lower("skills"::text)::JSONB @> '${JSON.stringify(searchSkills.map((skill) => skill.toLowerCase()))}'::JSONB`,
+        )
+      : undefined;
 
   const [lengths, profiles] = await Promise.all([
     db.select({ count: sql<number>`count(*)` }).from(users),
@@ -33,7 +38,7 @@ const ProfileGrid = async ({ page, searchParams }: Props) => {
               ilike(users.name, `%${searchParams}%`),
               ilike(users.location, `%${searchParams}%`),
               ilike(users.description, `%${searchParams}%`),
-              skillsCondition
+              skillsCondition,
             ),
           )
           .limit(itemPerPage)
@@ -48,24 +53,14 @@ const ProfileGrid = async ({ page, searchParams }: Props) => {
 
   const count = lengths[0].count;
   return (
-    <div className="lg:mt-32 mt-[10rem] mb-8 border-t-orange-500 lg:ml-[20rem] px-4 lg:px-6 overflow-y-scroll relative">
+    <div className="lg:mt-32 mt-[10rem] mb-8 border-t-orange-500 lg:ml-[20rem] px-4 lg:px-6 relative">
       <Search />
       <div className="flex-center flex-col gap-3">
         {count <= 0 || profiles.length === 0 ? (
           <Notfound />
         ) : (
-          profiles.map((item, index: number) => (
-            <ProfileCard
-              key={index}
-              role={item.role}
-              description={item.description}
-              location={item.location}
-              name={item.name}
-              portfolio={item.portfolio as string}
-              skill={item.skills}
-              profileImage={item.profileImage as string}
-              social={item.social as any}
-            />
+          profiles.map((profile, i) => (
+            <ProfileCard key={i} profile={profile} />
           ))
         )}
       </div>
