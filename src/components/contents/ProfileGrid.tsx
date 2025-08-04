@@ -2,7 +2,7 @@ import { db } from "@/database";
 import { users } from "@/schemas";
 import ProfileCard from "./ProfileCard";
 import Paginations from "../pagination/Paginations";
-import { ilike, or, sql } from "drizzle-orm";
+import { ilike, sql, SQL } from "drizzle-orm";
 import Notfound from "../shared/Notfound";
 import Search from "../shared/search/Search";
 
@@ -12,61 +12,74 @@ type Props = {
 };
 
 const ProfileGrid = async ({ page, searchParams }: Props) => {
-  const currentPage = parseInt(page); // like 1
-  const itemPerPage = 5; // we want to show 5 item in per pages
-  const offset = (currentPage - 1) * itemPerPage; // (1 - 1) * 3 = 0
-  const searchSkills = searchParams
-    ? searchParams.toLowerCase().split(/[\s,]+/)
-    : []; // regular expression to accept inputs separated by comma, space or both
+  const currentPage = parseInt(page, 10) || 1;
+  const itemsPerPage = 5;
+  const offset = (currentPage - 1) * itemsPerPage;
 
-  // In order to get rid of the "error: operator does not exist: json @> json" I mannually cast the skills column to JSONB
-  const skillsCondition =
-    searchSkills.length > 0
-      ? sql.raw(
-          `lower("skills"::text)::JSONB @> '${JSON.stringify(searchSkills.map((skill) => skill.toLowerCase()))}'::JSONB`,
+  const whereConditions: SQL[] = [];
+
+  const searchQuery = searchParams?.trim().toLowerCase() || "";
+  const searchTokens = searchQuery ? searchQuery.split(/[\s,]+/) : [];
+
+  // Text field search
+  if (searchQuery) {
+    whereConditions.push(
+      ilike(users.name, `%${searchQuery}%`),
+      ilike(users.location, `%${searchQuery}%`),
+      ilike(users.description, `%${searchQuery}%`)
+    );
+
+    const skillConditions = searchTokens
+      .map((token) => `skill ILIKE '%${token}%'`)
+      .join(" OR ");
+
+    if (skillConditions) {
+      whereConditions.push(
+        sql.raw(`
+        EXISTS (
+          SELECT 1 FROM json_array_elements_text("skills") AS skill
+          WHERE ${skillConditions}
         )
-      : undefined;
+      `)
+      );
+    }
+  }
 
-  const [lengths, profiles] = await Promise.all([
-    db.select({ count: sql<number>`count(*)` }).from(users),
-    searchParams
-      ? db
-          .select()
-          .from(users)
-          .where(
-            or(
-              ilike(users.name, `%${searchParams}%`),
-              ilike(users.location, `%${searchParams}%`),
-              ilike(users.description, `%${searchParams}%`),
-              skillsCondition,
-            ),
-          )
-          .limit(itemPerPage)
-          .offset(offset)
-      : db
-          .select()
-          .from(users)
-          .orderBy(sql.raw("RANDOM()"))
-          .limit(itemPerPage)
-          .offset(offset),
+  const whereClause = whereConditions.length
+    ? sql`(${sql.join(whereConditions, sql` OR `)})`
+    : undefined;
+
+  const [countResult, profiles] = await Promise.all([
+    db
+      .select({ count: sql<number>`count(*)` })
+      .from(users)
+      .where(whereClause),
+    db
+      .select()
+      .from(users)
+      .where(whereClause)
+      .orderBy(sql.raw("RANDOM()"))
+      .limit(itemsPerPage)
+      .offset(offset),
   ]);
 
-  const count = lengths[0].count;
+  const count = countResult[0]?.count ?? 0;
+
   return (
     <div className="lg:mt-32 mt-[10rem] mb-8 border-t-orange-500 lg:ml-[20rem] px-4 lg:px-6 relative">
       <Search />
       <div className="flex-center flex-col gap-3">
-        {count <= 0 || profiles.length === 0 ? (
-          <Notfound />
-        ) : (
+        {profiles.length ? (
           profiles.map((profile, i) => (
             <ProfileCard key={i} profile={profile} />
           ))
+        ) : (
+          <Notfound />
         )}
       </div>
       <Paginations
-        hasNextPage={currentPage < Math.ceil(count / itemPerPage)}
-        hasPrevPage={currentPage !== 1}
+        hasNextPage={currentPage < Math.ceil(count / itemsPerPage)}
+        hasPrevPage={currentPage > 1}
         search={searchParams}
       />
     </div>

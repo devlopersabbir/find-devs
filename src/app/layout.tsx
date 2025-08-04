@@ -28,12 +28,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en">
       <body
         suppressHydrationWarning={true}
         className={cn(
           "relative h-full font-sans antialiased bg-zinc-100 dark:bg-zinc-900",
-          inter.className,
+          inter.className
         )}
       >
         <ThemeProvider
