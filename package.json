@@ -1,8 +1,14 @@
 {
   "name": "finddevs",
   "description": "Discover All Developers From The Programming World",
-  "version": "0.2.0",
+  "version": "1.2.1",
   "private": false,
+  "author": {
+    "email": "devlopersabbir@gmail.com",
+    "name": "Sabbir Hossain Shuvo",
+    "url": "https://devlopersabbir.github.io"
+  },
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,7 +18,6 @@
     "introspect": "drizzle-kit introspect:pg",
     "push": "drizzle-kit push:pg",
     "generate": "drizzle-kit generate:pg",
-    "migrate": "drizzle-kit migrate:pg",
     "drop": "drizzle-kit drop",
     "studio": "drizzle-kit studio --host localhost --port 3001 --verbose --config drizzle.config.ts",
     "seed": "cross-env DB_SEEDING=true tsx src/database/seed.ts"

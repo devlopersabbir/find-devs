@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   icons: "/favicon/favicon.ico",
   authors: {
     name: "Sabbir Hossain Shuvo",
-    url: "https://github.com/devlopersabbir",
+    url: "https://devlopersabbir.github.io",
   },
 };
 

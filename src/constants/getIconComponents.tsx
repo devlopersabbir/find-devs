@@ -1,26 +1,26 @@
-import { Network } from "@/utils";
-import { FacebookIcon, GithubIcon, LinkedinIcon } from "lucide-react";
 import React from "react";
+import { Facebook, Github, Linkedin } from "lucide-react";
+import { TNet } from "@/types";
 
-export const getIconComponent = (network: string) => {
+export const getIconComponent = (network: TNet) => {
   switch (network) {
-    case Network.Facebook:
+    case "Facebook":
       return (
-        <FacebookIcon
+        <Facebook
           size={25}
           className="group-hover:scale-125 group-hover:text-rose-600 group-hover:rotate-[360deg] duration-300 ease-out"
         />
       );
-    case Network.Github:
+    case "GitHub":
       return (
-        <GithubIcon
+        <Github
           size={25}
           className="group-hover:scale-125 group-hover:text-rose-600 group-hover:rotate-[360deg] duration-300 ease-out"
         />
       );
-    case Network.Linkedin:
+    case "LinkedIn":
       return (
-        <LinkedinIcon
+        <Linkedin
           size={25}
           className="group-hover:scale-125 group-hover:text-rose-600 group-hover:rotate-[360deg] duration-300 ease-out"
         />

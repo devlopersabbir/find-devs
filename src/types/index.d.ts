@@ -1,13 +1,17 @@
 import { userSchema } from "@/lib/validations";
-import { Network } from "@/utils";
+import { Network, networks } from "@/utils";
 import { config } from "@/lib/validations";
 import { LucideProps } from "lucide-react";
+import { z } from "zod";
 
 export type TUserSchema = z.infer<typeof userSchema>;
 export type TRole = "SYSTEM_ADMIN" | "DEVELOPER" | "ADMIN";
-export type TNet = keyof typeof Network;
+export type TNet = (typeof networks)[number];
 export type TNetwork = {
-  network: TNet | undefined;
+  network: TNet;
   link: string;
   icon?: LucideProps;
+};
+const s: TNetwork = {
+  network: "",
 };

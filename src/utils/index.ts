@@ -3,11 +3,11 @@ export const isBase64Image = (imageData: string): boolean => {
   return base64Regex.test(imageData);
 };
 
-export enum Network {
-  Facebook = "Facebook",
-  Instagram = "Instagram",
-  Github = "Github",
-  Linkedin = "Linkedin",
-  Twitter = "Twitter",
-  Youtube = "Youtube",
-}
+export const networks = [
+  "Facebook",
+  "Instagram",
+  "GitHub",
+  "LinkedIn",
+  "Twitter",
+  "YouTube",
+] as const;
