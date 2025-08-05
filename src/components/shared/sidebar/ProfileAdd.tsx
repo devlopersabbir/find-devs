@@ -35,7 +35,7 @@ const ProfileAdd = () => {
       </DialogTrigger>
 
       {/* diolog content */}
-      <DialogContent className="sm:max-w-[640px] p-0 overflow-y-scroll h-[70vh]">
+      <DialogContent className="sm:max-w-[740px] p-0 overflow-y-scroll h-[80vh]">
         <DialogHeader className="p-5">
           <DialogTitle>Add Profile</DialogTitle>
         </DialogHeader>

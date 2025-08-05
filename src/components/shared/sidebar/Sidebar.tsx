@@ -32,7 +32,6 @@ const Sidebar = () => {
             alt="donate button"
             width={130}
             height={80}
-            objectFit="cover"
           />
         </Link>
         <Link

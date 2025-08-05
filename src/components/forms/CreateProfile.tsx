@@ -55,7 +55,7 @@ const CreateProfile = ({
   /** image handler */
   const handleImage = async (
     event: ChangeEvent<HTMLInputElement>,
-    fieldChange: (value: string) => void,
+    fieldChange: (value: string) => void
   ) => {
     event.preventDefault();
     /** File reader */
@@ -107,12 +107,12 @@ const CreateProfile = ({
             control={form.control}
             name="profileImage"
             render={({ field }) => (
-              <FormItem className="flex-center w-40 h-40 relative cursor-pointer">
+              <FormItem className="flex-center w-56 h-56 relative cursor-pointer overflow-hidden rounded-full shadow-xl">
                 {field.value ? (
                   <Image
                     src={field.value}
-                    width={160}
-                    height={160}
+                    width={224}
+                    height={224}
                     alt="profile photo"
                     objectFit="cover"
                     priority
